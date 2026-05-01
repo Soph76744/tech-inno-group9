@@ -12,8 +12,14 @@ const faultRoutes = require("./routes/faults");
 
 const app = express();
 
+const cors = require("cors");
+
+app.use(cors({
+  origin: "http://localhost:5173" // React dev server
+}));
+
 app.use(express.json());
-app.use(express.static("static"));
+app.use(express.static("../client/dist"));
 
 // Optional request logging (good for debugging)
 app.use((req, res, next) => {

@@ -1,3 +1,4 @@
+/*
 // Base API URL
 const BASE_URL = "/api/tools";
 
@@ -53,3 +54,27 @@ export async function updateTool(id, status) {
 
   return handleResponse(res);
 }
+*/
+
+import axios from "axios";
+
+const API = axios.create({
+  baseURL: "/api"
+});
+
+// Tools
+export const getTools = (status) =>
+  API.get("/tools", { params: status ? { status } : {} });
+
+export const createTool = (data) =>
+  API.post("/tools", data);
+
+export const updateTool = (id, status) =>
+  API.patch(`/tools/${id}`, { status });
+
+// Faults
+export const getFaults = () =>
+  API.get("/faults");
+
+export const detectFault = () =>
+  API.get("/faults/detect");
