@@ -39,7 +39,7 @@ export default function ToolsPage() {
   return (
     <div>
       <h1>Tool Tracker</h1>
-      <a href="/ar">Open AR</a> | <a href="/faults">Fault Logs</a>
+      <a href="/dashboard">Dashboard</a> | <a href="/ar">Open AR</a> | <a href="/faults">Fault Logs</a>
 
       <ToolForm onAdd={handleAdd} />
       <Message text={message} />
