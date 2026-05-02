@@ -176,7 +176,7 @@ export default function ARPage() {
         zIndex: 9999,
         textAlign: "center"
       }}>
-        <a href="/">Tools</a> | <a href="/faults">Faults</a>
+        <a href="/dashboard">Dashboard | </a><a href="/tools">Tools</a> | <a href="/faults">Faults</a>
 
         <h3>AR Maintenance</h3>
         <p>{status}</p>

@@ -1,10 +1,10 @@
 
 .heading-style {
     font-family: 'Lucida Console', monospace;
-    color:rgb(255, 255, 255);
+    color:rgba(255, 255, 255, 0.452);
     text-align: center;
   }
 
 .background-style {
-    background-color: #2b0863;
+    background-color: rgb(27, 5, 64);
 }
