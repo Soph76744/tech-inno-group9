@@ -35,7 +35,7 @@ export default function ARPage() {
 
   /* ---------------- TOOL ---------------- */
   async function loadTool() {
-    const res = await fetch("/api/tools");
+    const res = await fetch("/api/tools", {credentials: "include"});
     const tools = await res.json();
     if (!tools.length) return;
 
@@ -62,7 +62,8 @@ export default function ARPage() {
     await fetch(`/api/tools/${tool.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status })
+      body: JSON.stringify({ status }),
+      credentials: "include"
     });
 
     loadTool();
@@ -71,7 +72,7 @@ export default function ARPage() {
   /* ---------------- FAULT ---------------- */
   async function loadFault() {
     try {
-      const res = await fetch("/api/faults/detect");
+      const res = await fetch("/api/faults/detect", { credentials: "include" });
       const data = await res.json();
 
       const text = document.querySelector("#faultText");
@@ -176,7 +177,6 @@ export default function ARPage() {
         zIndex: 9999,
         textAlign: "center"
       }}>
-        <a href="/">Tools</a> | <a href="/faults">Faults</a>
 
         <h3>AR Maintenance</h3>
         <p>{status}</p>
