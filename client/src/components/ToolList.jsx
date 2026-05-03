@@ -1,4 +1,4 @@
-export default function ToolList({ tools, onToggle, onSelect }) {
+export default function ToolList({ tools, onToggle, onSelect, onDelete }) {
     if (!Array.isArray(tools)) return <p>Loading...</p>;
   
     return (
@@ -12,6 +12,7 @@ export default function ToolList({ tools, onToggle, onSelect }) {
             <button onClick={() => onToggle(tool, "available")}>Return</button>
             <button onClick={() => onToggle(tool, "missing")}>Missing</button>
             <button onClick={() => onSelect(tool)}>Details</button>
+            <button onClick={() => onDelete(tool.id)}>Delete</button>
           </div>
         </div>
       ))}

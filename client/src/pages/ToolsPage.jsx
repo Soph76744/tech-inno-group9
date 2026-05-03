@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTools, createTool, updateTool } from "../services/api";
+import { getTools, createTool, updateTool, deleteTool } from "../services/api";
 
 import ToolForm from "../components/ToolForm";
 import ToolList from "../components/ToolList";
@@ -24,16 +24,28 @@ export default function ToolsPage() {
   const handleAdd = async (data) => {
     try {
       await createTool(data);
-      setMessage("Tool created ✔");
+      setMessage("Tool added.");
       loadTools();
     } catch {
-      setMessage("Error creating tool");
+      setMessage("Error adding tool");
     }
   };
 
   const handleToggle = async (tool, status) => {
     await updateTool(tool.id, status);
     loadTools();
+  };
+
+  // delete tool
+  const handleDelete = async (id) => {
+    try {
+      await deleteTool(id);
+      setMessage("Deleted successfully.");
+      loadTools();
+    } catch (err) {
+      console.error(err);
+      setMessage(err.message);
+    }
   };
 
   return (
@@ -47,7 +59,7 @@ export default function ToolsPage() {
       <div className="card">
         <h2>Tools</h2>
         <Filters onFilter={setFilter} />
-        <ToolList tools={tools} onToggle={handleToggle} onSelect={setSelected} />
+        <ToolList tools={tools} onToggle={handleToggle} onSelect={setSelected} onDelete={handleDelete}/>
       </div>
 
       <div className="card">

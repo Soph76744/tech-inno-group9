@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const { sequelize } = require("../faultDatabase");
+const sequelize = require("../faultDatabase");
 
 const Fault = sequelize.define("Fault", {
   type: {
@@ -17,6 +17,8 @@ const Fault = sequelize.define("Fault", {
     type: DataTypes.STRING,
     defaultValue: "open"
   }
+}, {
+  timestamps: true
 });
 
 module.exports = Fault;
