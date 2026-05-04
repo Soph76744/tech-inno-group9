@@ -5,11 +5,11 @@ export default function Navbar() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // 🔹 get logged-in user
+  // Get logged in user
   useEffect(() => {
     fetch("/api/auth/me", { credentials: "include "})
         .then(res => {
-        if (!res.ok) return null; // 👈 prevents 401 crash
+        if (!res.ok) return null; // prevents 401 crash
         return res.json();
         })
         .then(data => {
@@ -20,7 +20,7 @@ export default function Navbar() {
         .catch(() => setUser(null));
     }, []);
 
-  // 🔹 logout
+  // Logout
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
     navigate("/login");
@@ -44,11 +44,11 @@ export default function Navbar() {
         <Link to="/ar" style={{ color: "white" }}>AR</Link>
       </div>
 
-      {/* RIGHT SIDE USER */}
+      {/* RIGHT SIDE USER - currently does not display logged in profile */}
       <div>
         {user && (
           <span style={{ marginRight: 10 }}>
-            Logged in as <strong>{user}</strong>
+            Logged in as <strong>{user}</strong> 
           </span>
         )}
 

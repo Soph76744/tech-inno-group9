@@ -27,7 +27,7 @@ export default function LoginPage({ onLogin }) {
       }
 
       setError("");
-      navigate("/");
+      navigate("/"); // navigates to tool page 
 
     } catch (err) {
       setError("Server error");

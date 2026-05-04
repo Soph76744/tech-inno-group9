@@ -17,9 +17,9 @@ const bcrypt = require("bcrypt");
 
 const app = express();
 
-/* ---------------- MIDDLEWARE ---------------- */
+// Middleware
 
-// CORS (must be BEFORE routes)
+// CORS 
 app.use(cors({
   origin: "http://localhost:5173",
   credentials: true
@@ -28,7 +28,7 @@ app.use(cors({
 // JSON
 app.use(express.json());
 
-// SESSION (must be BEFORE routes)
+// Session
 app.use(session({
   secret: "secret-key",
   resave: false,
@@ -46,7 +46,7 @@ app.use((req, res, next) => {
   next();
 });
 
-/* ---------------- AUTH MIDDLEWARE ---------------- */
+// Auth Middleware
 
 function requireAuth(req, res, next) {
   if (!req.session.user) {
@@ -55,7 +55,7 @@ function requireAuth(req, res, next) {
   next();
 }
 
-/* ---------------- API ROUTES ---------------- */
+// API Routes
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tools", requireAuth, toolRoutes);
@@ -71,9 +71,8 @@ app.get("/api/logs", async (req, res) => {
   }
 });
 
-/* ---------------- REACT FRONTEND ---------------- */
+// React Frontend
 
-// ✅ FIXED PATH (THIS WAS WRONG BEFORE)
 const clientPath = path.join(__dirname, "../client/dist");
 
 // Serve static React build
@@ -88,14 +87,14 @@ app.use((req, res) => {
   res.sendFile(path.join(clientPath, "index.html"));
 });
 
-/* ---------------- ERROR HANDLER ---------------- */
+// Error handler 
 
 app.use((err, req, res, next) => {
   console.error("FULL ERROR:", err);
   res.status(500).json({ error: err.message });
 });
 
-/* ---------------- START SERVER ---------------- */
+// Start Server
 
 const PORT = process.env.PORT || 3000;
 
@@ -103,7 +102,7 @@ async function startServer() {
   try {
     await sequelize.sync();
 
-    // ✅ SAFE USER SEED
+    // User info
     const existing = await User.findByPk("admin");
 
     if (!existing) {

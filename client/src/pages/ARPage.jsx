@@ -9,7 +9,7 @@ export default function ARPage() {
   const [showControls, setShowControls] = useState(false);
   const [lastFaultId, setLastFaultId] = useState(null);
 
-  /* ---------------- LOAD AR.JS (CRITICAL) ---------------- */
+  // Load AR.js
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -24,7 +24,7 @@ export default function ARPage() {
     document.body.appendChild(script);
   }, []);
 
-  /* ---------------- LOG SYSTEM ---------------- */
+  // Log system
   function logEvent(msg, type = "info") {
     const time = new Date().toLocaleTimeString();
     setLogs((prev) => [
@@ -33,7 +33,7 @@ export default function ARPage() {
     ]);
   }
 
-  /* ---------------- TOOL ---------------- */
+  // Tool
   async function loadTool() {
     const res = await fetch("/api/tools", {credentials: "include"});
     const tools = await res.json();
@@ -69,7 +69,7 @@ export default function ARPage() {
     loadTool();
   }
 
-  /* ---------------- FAULT ---------------- */
+  // Fault
   async function loadFault() {
     try {
       const res = await fetch("/api/faults/detect", { credentials: "include" });
@@ -117,7 +117,7 @@ export default function ARPage() {
     }
   }
 
-  /* ---------------- INIT AFTER AR READY ---------------- */
+  // Init after AR ready
   useEffect(() => {
     if (!arReady) return;
 
@@ -160,7 +160,7 @@ export default function ARPage() {
     return () => clearInterval(interval);
   }, [arReady]);
 
-  /* ---------------- UI ---------------- */
+  // UI
   return (
     <div style={{ height: "100vh", overflow: "hidden" }}>
 

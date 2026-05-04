@@ -28,7 +28,6 @@ export default function FaultsPage() {
     <div>
       <h1>Fault Logs</h1>
 
-      {/* SAFE RENDER */}
       {faults.length > 0 ? (
         faults.map(f => (
           <div key={f.id} className="card">

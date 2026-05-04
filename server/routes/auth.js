@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 const User = require("../models/User");
 
-/* LOGIN */
+// Login
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -32,13 +32,13 @@ router.post("/login", async (req, res) => {
   res.json({ message: "Login successful" });
 });
 
-/* LOGOUT */
+// Logout
 router.post("/logout", (req, res) => {
   req.session.destroy();
   res.json({ message: "Logged out" });
 });
 
-/* CHECK SESSION */
+// Check session
 router.get("/me", (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ error: "Not logged in" });
