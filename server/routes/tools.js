@@ -108,4 +108,34 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+// delete a tool - delete if unnecessary
+router.delete("/:id", async (req, res) => {
+  try {
+    console.log("Deleting tool id:", req.params.id);
+
+    const tool = await Tool.findByPk(req.params.id);
+
+    if (!tool) {
+      console.log("Tool not found");
+      return res.status(404).json({ error: "Tool not found" });
+    }
+
+    await tool.destroy();
+
+    console.log("Tool deleted successfully");
+
+    return res.status(200).json({
+      success: true,
+      message: "Tool deleted"
+    });
+
+  } catch (err) {
+    console.error("DELETE ERROR:", err);
+
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
 module.exports = router;

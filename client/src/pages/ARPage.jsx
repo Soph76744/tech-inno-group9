@@ -178,6 +178,10 @@ export default function ARPage() {
         textAlign: "center"
       }}>
 
+        <a href="/dashboard">Dashboard | </a>
+        <a href="/tools">Tools</a> | 
+        <a href="/faults">Faults</a>
+
         <h3>AR Maintenance</h3>
         <p>{status}</p>
 

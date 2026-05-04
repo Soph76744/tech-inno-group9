@@ -39,7 +39,8 @@ export default function Navbar() {
 
       {/* LEFT SIDE NAV */}
       <div>
-        <Link to="/" style={{ color: "white", marginRight: 10 }}>Tools</Link>
+        <Link to="/" style={{ color: "white", marginRight: 10 }}>Dashboard</Link>
+        <Link to="/tools" style={{ color: "white", marginRight: 10 }}>Tool Tracker</Link>
         <Link to="/faults" style={{ color: "white", marginRight: 10 }}>Faults Logs</Link>
         <Link to="/ar" style={{ color: "white" }}>AR</Link>
       </div>
