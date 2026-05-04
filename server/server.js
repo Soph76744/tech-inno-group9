@@ -110,6 +110,23 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });
 });
 
+// User creation
+async function createUserIfNotExists(username, password, role) {
+  const existing = await User.findByPk(username);
+
+  if (!existing) {
+    const hash = await bcrypt.hash(password, 10);
+
+    await User.create({
+      username,
+      password: hash,
+      role
+    });
+
+    console.log(`Default ${role} user created: ${username}`);
+  }
+}
+
 // Start Server
 
 const PORT = process.env.PORT || 3000;
@@ -119,19 +136,8 @@ async function startServer() {
     await sequelize.sync();
 
     // User info
-    const existing = await User.findByPk("admin");
-
-    if (!existing) {
-      const hash = await bcrypt.hash("password123", 10);
-
-      await User.create({
-        username: "admin",
-        password: hash,
-        role: "admin"
-      });
-
-      console.log("Default admin user created");
-    }
+    await createUserIfNotExists("admin", "password123", "admin");
+    await createUserIfNotExists("engineer1", "password456", "engineer");
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
