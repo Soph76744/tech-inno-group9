@@ -43,3 +43,9 @@ export default function FaultsPage() {
     </div>
   );
 }
+
+/* Admin-only actions
+{user?.role === "admin" && (
+  <button onClick={deleteFault}>Delete Fault</button>
+)}
+*/

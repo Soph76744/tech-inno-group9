@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import Layout from "./layouts/Layout";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import RoleProtectedRoute from "./routes/RoleProtectedRoute";
 
 import LoginPage from "./pages/LogInPage";
 import ToolsPage from "./pages/ToolsPage";
@@ -20,7 +21,7 @@ export default function App() {
       <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
 
         <Route path="/" element={<ToolsPage />} />
-        <Route path="/faults" element={<FaultsPage />} />
+        <Route path="/faults" element={<RoleProtectedRoute role="admin"><FaultsPage /></RoleProtectedRoute>} />
         <Route path="/ar" element={<ARPage />} />
 
       </Route>

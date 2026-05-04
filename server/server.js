@@ -55,11 +55,27 @@ function requireAuth(req, res, next) {
   next();
 }
 
+// Role-based Middleware
+
+function requireRole(role) {
+  return (req, res, next) => {
+    if (!req.session.user) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    if (req.session.user.role !== role) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
+
+    next();
+  };
+}
+
 // API Routes
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tools", requireAuth, toolRoutes);
-app.use("/api/faults", requireAuth, faultRoutes);
+app.use("/api/faults", requireAuth, requireRole("admin"), faultRoutes);
 
 app.get("/api/logs", async (req, res) => {
   try {
@@ -110,7 +126,8 @@ async function startServer() {
 
       await User.create({
         username: "admin",
-        password: hash
+        password: hash,
+        role: "admin"
       });
 
       console.log("Default admin user created");

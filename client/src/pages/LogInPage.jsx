@@ -55,7 +55,7 @@ export default function LoginPage({ onLogin }) {
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          style={{ width: "100%", margin: "10px 0", padding: 8 }}
+          style={{ width: "94%", margin: "10px 0", padding: 8 }}
         />
 
         <input
@@ -63,7 +63,7 @@ export default function LoginPage({ onLogin }) {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ width: "100%", margin: "10px 0", padding: 8 }}
+          style={{ width: "94%", margin: "10px 0", padding: 8 }}
         />
 
         <button style={{ width: "100%", padding: 10 }}>

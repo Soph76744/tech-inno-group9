@@ -14,7 +14,7 @@ export default function Navbar() {
         })
         .then(data => {
         if (data && data.user) {
-            setUser(data.user);
+            setUser(data);
         }
         })
         .catch(() => setUser(null));
@@ -48,7 +48,7 @@ export default function Navbar() {
       <div>
         {user && (
           <span style={{ marginRight: 10 }}>
-            Logged in as <strong>{user}</strong> 
+            Logged in as <strong>{user.user}</strong> ({user.role})
           </span>
         )}
 

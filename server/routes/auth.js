@@ -27,7 +27,10 @@ router.post("/login", async (req, res) => {
     return res.status(401).json({ error: "Invalid password" });
   }
 
-  req.session.user = user.username;
+  req.session.user = {
+    username: user.username,
+    role: user.role
+  };
 
   res.json({ message: "Login successful" });
 });
@@ -44,7 +47,10 @@ router.get("/me", (req, res) => {
     return res.status(401).json({ error: "Not logged in" });
   }
 
-  res.json({ user: req.session.user });
+  res.json({ 
+    user: req.session.user.username,
+    role: req.session.user.role
+   });
 });
 
 module.exports = router;
