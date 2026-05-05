@@ -5,6 +5,7 @@ import ToolForm from "../components/ToolForm";
 import ToolList from "../components/ToolList";
 import Filters from "../components/Filters";
 import Message from "../components/Message";
+import "../styles/ToolsPage.css";
 
 export default function ToolsPage() {
   const [tools, setTools] = useState([]);
@@ -27,7 +28,7 @@ export default function ToolsPage() {
       setMessage("Tool added.");
       loadTools();
     } catch {
-      setMessage("Error adding tool");
+      setMessage("Error adding tool,");
     }
   };
 
@@ -50,28 +51,31 @@ export default function ToolsPage() {
 
   return (
     <div>
-      <h1>Tool Tracker</h1>
+      <h1 className="heading-style">Tool Tracker</h1>
       <a href="/dashboard">Dashboard</a> | <a href="/ar">Open AR</a> | <a href="/faults">Fault Logs</a>
 
       <ToolForm onAdd={handleAdd} />
       <Message text={message} />
 
       <div className="card">
-        <h2>Tools</h2>
+        <h2 className="heading-style">Tools</h2>
         <Filters onFilter={setFilter} />
         <ToolList tools={tools} onToggle={handleToggle} onSelect={setSelected} onDelete={handleDelete}/>
       </div>
 
       <div className="card">
-        <h2>Details</h2>
+
+  
+        <h2 className="heading-style">Details</h2>
         {selected ? (
           <div>
-            <p>{selected.name}</p>
-            <p>{selected.type}</p>
-            <p>{selected.status}</p>
+            <p><b>Name</b>: {selected.name}</p>
+            <p><b>Type:</b> {selected.type}</p>
+            <p><b>Status: </b>{selected.status}</p>
+            <p><b>Last User:</b> added when merge</p> 
           </div>
         ) : (
-          <p>Click a tool to view details.</p>
+          <p>Click to view details of the tool.</p>
         )}
       </div>
     </div>

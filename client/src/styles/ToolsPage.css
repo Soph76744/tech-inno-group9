@@ -1,0 +1,58 @@
+.heading-style {
+  font-family: 'Lucida Console', monospace;
+  color:rgba(255, 255, 255, 0.452);
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.delete-button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.4em 0.8em;
+    margin: 0.3em;
+    font-size: 0.8em;
+    font-weight: bold;
+    font-family: 'Lucida Console', monospace;
+    color: rgb(0, 0, 0);
+    background-color: #424a65;
+    cursor: pointer;
+    transition: border-color 0.25s;
+    box-shadow: 3px 3px black;
+  }
+
+.general-button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.4em 0.8em;
+    margin: 0.3em;
+    font-size: 0.8em;
+    font-weight: bold;
+    font-family: 'Lucida Console', monospace;
+    color: rgb(0, 0, 0);
+    background-color: #737D9E;
+    cursor: pointer;
+    transition: border-color 0.25s;
+    box-shadow: 3px 3px black;
+  }
+
+
+.filters-button {
+    border-style: solid;
+    border-color: rgb(21, 22, 24);
+    padding: 0em 1.7em;
+    font-size: 0.8em;
+    font-weight: bold;
+    font-family: 'Lucida', monospace;
+    color: rgb(214, 214, 214);
+    background-color: #464d65;
+    transition: border-color 0.25s;
+    cursor: pointer;
+  }
+
+  .name-style {
+    font-family: 'consolas', monospace;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+ 

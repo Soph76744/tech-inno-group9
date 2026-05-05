@@ -1,10 +1,12 @@
+import "../styles/ToolsPage.css";
+
 export default function Filters({ onFilter }) {
   return (
     <div className="row">
-      <button onClick={() => onFilter(null)}>All</button>
-      <button onClick={() => onFilter("available")}>Available</button>
-      <button onClick={() => onFilter("in-use")}>In Use</button>
-      <button onClick={() => onFilter("missing")}>Missing</button>
+      <button className="filters-button" onClick={() => onFilter(null)}>All</button>
+      <button className="filters-button" onClick={() => onFilter("available")}>Available</button>
+      <button className="filters-button" onClick={() => onFilter("in-use")}>In Use</button>
+      <button className="filters-button" onClick={() => onFilter("missing")}>Missing</button>
     </div>
   );
 }

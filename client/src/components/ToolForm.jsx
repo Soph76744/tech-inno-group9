@@ -1,4 +1,6 @@
 import { useState } from "react";
+import "../styles/ToolsPage.css";
+
 
 export default function ToolForm({ onAdd }) {
   const [name, setName] = useState("");
@@ -17,7 +19,7 @@ export default function ToolForm({ onAdd }) {
 
   return (
     <div className="card">
-      <h2>Add Tool</h2>
+      <h2><b>Add Tool</b></h2>
 
       <div className="row">
         <input value={name} onChange={e => setName(e.target.value)} placeholder="Tool name" />
@@ -25,7 +27,7 @@ export default function ToolForm({ onAdd }) {
         <input value={location} onChange={e => setLocation(e.target.value)} placeholder="Location" />
       </div>
 
-      <button onClick={handleSubmit}>Add Tool</button>
+      <button className="filters-button" onClick={handleSubmit}>Add Tool</button>
     </div>
   );
 }

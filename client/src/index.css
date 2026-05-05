@@ -1,5 +1,5 @@
 :root {
-  --text: #6b6375;
+  --text: #777777;
   --text-h: #08060d;
   --bg: #fff;
   --border: #e5e4e7;
@@ -12,7 +12,7 @@
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: ui-monospace, "Lucida Console", monospace;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
@@ -32,8 +32,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
+    --text: #777777;
+    --text-h: #777777;
     --bg: #16171d;
     --border: #2e303a;
     --code-bg: #1f2028;
