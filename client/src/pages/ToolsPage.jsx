@@ -50,7 +50,7 @@ export default function ToolsPage() {
   };
 
   return (
-    <div>
+    <div className="tools-page">
       <h1>Tool Tracker</h1>
 
       <ToolForm onAdd={handleAdd} />

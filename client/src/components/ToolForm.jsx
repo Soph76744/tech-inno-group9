@@ -19,7 +19,7 @@ export default function ToolForm({ onAdd }) {
 
   return (
     <div className="card">
-      <h2><b>Add Tool</b></h2>
+      <h2>Add Tool</h2>
 
       <div className="row">
         <input value={name} onChange={e => setName(e.target.value)} placeholder="Tool name" />
