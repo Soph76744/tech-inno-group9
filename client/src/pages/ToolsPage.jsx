@@ -51,8 +51,7 @@ export default function ToolsPage() {
 
   return (
     <div>
-      <h1 className="heading-style">Tool Tracker</h1>
-      <a href="/dashboard">Dashboard</a> | <a href="/ar">Open AR</a> | <a href="/faults">Fault Logs</a>
+      <h1>Tool Tracker</h1>
 
       <ToolForm onAdd={handleAdd} />
       <Message text={message} />
@@ -60,7 +59,12 @@ export default function ToolsPage() {
       <div className="card">
         <h2 className="heading-style">Tools</h2>
         <Filters onFilter={setFilter} />
-        <ToolList tools={tools} onToggle={handleToggle} onSelect={setSelected} onDelete={handleDelete}/>
+        <ToolList
+          tools={tools}
+          onToggle={handleToggle}
+          onSelect={setSelected}
+          onDelete={handleDelete}
+        />
       </div>
 
       <div className="card">

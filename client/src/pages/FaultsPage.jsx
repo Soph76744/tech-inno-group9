@@ -4,7 +4,7 @@ export default function FaultsPage() {
   const [faults, setFaults] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/faults")
+    fetch("/api/faults", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         console.log("Fault API response:", data);
@@ -27,8 +27,6 @@ export default function FaultsPage() {
     <div>
       <h1>Fault Logs</h1>
 
-      <a href="/tools">Tools</a> | <a href="/ar">AR</a>
-
       {faults.length > 0 ? (
         faults.map((f) => (
           <div
@@ -46,8 +44,14 @@ export default function FaultsPage() {
           </div>
         ))
       ) : (
-        <p>No faults found</p>
+        <p>No fault logs found</p>
       )}
     </div>
   );
 }
+
+/* Admin-only actions
+{user?.role === "admin" && (
+  <button onClick={deleteFault}>Delete Fault</button>
+)}
+*/

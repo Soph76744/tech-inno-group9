@@ -9,7 +9,7 @@ export default function ARPage() {
   const [showControls, setShowControls] = useState(false);
   const [lastFaultId, setLastFaultId] = useState(null);
 
-  /* ---------------- LOAD AR.JS (CRITICAL) ---------------- */
+  // Load AR.js
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -24,7 +24,7 @@ export default function ARPage() {
     document.body.appendChild(script);
   }, []);
 
-  /* ---------------- LOG SYSTEM ---------------- */
+  // Log system
   function logEvent(msg, type = "info") {
     const time = new Date().toLocaleTimeString();
     setLogs((prev) => [
@@ -33,9 +33,9 @@ export default function ARPage() {
     ]);
   }
 
-  /* ---------------- TOOL ---------------- */
+  // Tool
   async function loadTool() {
-    const res = await fetch("/api/tools");
+    const res = await fetch("/api/tools", {credentials: "include"});
     const tools = await res.json();
     if (!tools.length) return;
 
@@ -62,16 +62,17 @@ export default function ARPage() {
     await fetch(`/api/tools/${tool.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status })
+      body: JSON.stringify({ status }),
+      credentials: "include"
     });
 
     loadTool();
   }
 
-  /* ---------------- FAULT ---------------- */
+  // Fault
   async function loadFault() {
     try {
-      const res = await fetch("/api/faults/detect");
+      const res = await fetch("/api/faults/detect", { credentials: "include" });
       const data = await res.json();
 
       const text = document.querySelector("#faultText");
@@ -116,7 +117,7 @@ export default function ARPage() {
     }
   }
 
-  /* ---------------- INIT AFTER AR READY ---------------- */
+  // Init after AR ready
   useEffect(() => {
     if (!arReady) return;
 
@@ -159,7 +160,7 @@ export default function ARPage() {
     return () => clearInterval(interval);
   }, [arReady]);
 
-  /* ---------------- UI ---------------- */
+  // UI
   return (
     <div style={{ height: "100vh", overflow: "hidden" }}>
 
@@ -176,7 +177,10 @@ export default function ARPage() {
         zIndex: 9999,
         textAlign: "center"
       }}>
-        <a href="/dashboard">Dashboard | </a><a href="/tools">Tools</a> | <a href="/faults">Faults</a>
+
+        <a href="/dashboard">Dashboard | </a>
+        <a href="/tools">Tools</a> | 
+        <a href="/faults">Faults</a>
 
         <h3>AR Maintenance</h3>
         <p>{status}</p>
