@@ -3,7 +3,7 @@ Do NOT need to initialse project as package.json already created
 Required dependencies
 
 CLIENT: 
-npm install aframe npm install react-router-dom 
+npm install aframe npm install react-router-dom react-google-charts
 npm run build
 npm run dev
 
