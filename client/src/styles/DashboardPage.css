@@ -1,0 +1,74 @@
+.dashboard-page {
+  min-height: 100vh;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  padding: 20px;
+}
+
+/* heading same style as tools page */
+.heading-style {
+  font-family: 'Lucida Console', monospace;
+  color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+/* stats row (top boxes) */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* main layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+/* card style */
+.card {
+  border: 2px solid black;
+  border-radius: 12px;
+  padding: 12px;
+  background-color: #737D9E;
+  box-shadow: 4px 4px black;
+  font-family: 'Lucida Console', monospace;
+}
+
+/* card headings */
+.card h2 {
+  margin-bottom: 10px;
+}
+
+/* tool name styling */
+.tool-name {
+  font-family: 'consolas', monospace;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* small text */
+small {
+  color: #222;
+  font-size: 0.75em;
+}
+
+/* severity colours */
+.high {
+  color: rgb(147, 0, 0);
+  font-weight: bold;
+}
+
+.medium {
+  color: rgb(255, 128, 0);
+  font-weight: bold;
+}
+
+.low {
+  color: rgb(1, 88, 1);
+  font-weight: bold;
+}
