@@ -1,0 +1,43 @@
+SQLite format 3@  .zq
+åå7
+ûg//‚}t\//‚gtablesqlb_temp_table_1sqlb_temp_table_1CREATE TABLE "faults" (
+	"id"	INTEGER,
+	"FaultName"	TEXT,
+	"Severity"	TEXT,
+	"ServiceType"	TEXT,
+	"ToolsNeeded"	TEXT,
+	"Description"	TEXT,
+	PRIMARY KEY("id" AUTOINCREMENT)
+)P++Ytablesqlite_sequencesqlite_sequenceCREATE TABLE sqlite_sequence(name,seq)F‚gtablefaultsfaultsCREATE TABLE "faults" (
+	"id"	INTEGER,
+	"FaultName"	TEXT,
+	"Severity"	TEXT,
+	"ServiceType"	TEXT,
+	"ToolsNeeded"	TEXT,
+	"Description"	TEXT,
+	PRIMARY KEY("id" AUTOINCREMENT)
+)¶EÓ\
+â
+oú™1Ì^
+å
+l
+	“	,Ô_ñß5›rC!O
+Driver Deadman Switch FaultCRITICALInspectionDiagnostic Laptop, Circuit TesterDeadman safety switch not registering driver presence correctly.
+5!K
+Coupler Lock FailureCRITICALInspectionLocking Tool Kit, Torque WrenchCoupler locking mechanism unable to securely connect tram units.;gAir Compressor ShutdownCRITICALRepairPressure Gauge, Socket Set, Replacement ValveMain pneumatic compressor has stopped operating unexpectedly.'UcPassenger Emergency Intercom FailureCRITICALRepairMultimeter, Replacement Module, ScrewdriverEmergency intercom system unavailable across all passenger cabins.1!mBogie Frame DamageCRITICALInspectionInspection Mirror, Flashlight, Ultrasonic TesterCrack detected on bogie frame affecting wheel assembly stability.p1!CiTrack Sensor FaultHIGHInspectionDiagnostic Tool, MultimeterTrack proximity sensor returning invalid data.l3#EWCooling Fan FailureMEDIUMReplacementReplacement Fan, ScrewdriverCooling fan not rotating as expected.s9#IaCabin Lighting FailureLOWReplacementReplacement Light, ScrewdriverPassenger cabin lighting partially failed.V/1QDoor Actuator JamHIGHRepairLubricant, Hex KeyDoor actuator movement restricted.e)#9cBrake Pad WearHIGHReplacementBrake Tool Kit, GlovesBrake pads worn below acceptable thickness.vC#CcDestination Display FailureLOWReplacementDisplay Module, ScrewdriverExternal route display blank or flickering._%#;YDamaged FuseHIGHReplacementFuse Puller, MultimeterFuse blown due to electrical overload.w7IsLoose Internal WiringHIGHRepairWire Stripper, Insulation TapeWiring behind control panel partially disconnected.w
+7!AoPassenger Alarm FaultMEDIUMInspectionMultimeter, Wiring DiagramPassenger emergency alarm circuit not responding.l+!AeSuspension WearMEDIUMInspectionInspection Kit, FlashlightSuspension components showing material wear.c
+/#GMHeadlight FailureLOWReplacementReplacement Bulb, ScrewdriverFront headlight non-operational.f	/CcCab Display ErrorLOWResetLaptop, Diagnostic SoftwareDriver display showing communication error._%;_HVAC FailureMEDIUMRepairMultimeter, ScrewdriverPassenger cabin HVAC unit not responding.s+%EkWheel Flat SpotMEDIUMMaintenance Inspection Gauge, FlashlightWheel surface shows flattening from brake lock.q5#9oBattery Voltage DropHIGHReplacementBattery Tester, GlovesAuxiliary battery output below operating voltage.x;!EmTraction Motor OverheatHIGHInspectionThermal Scanner, ScrewdriverMotor temperature exceeds recommended threshold.u;!9sPantograph MisalignmentHIGHAdjustmentAlignment Tool, WrenchPantograph not properly aligned with overhead wire.p3#;mDoor Sensor FailureHIGHReplacementMultimeter, ScrewdriverDoor sensor not detecting obstruction correctly.o3!9oBrake Pressure LossHIGHInspectionPressure Gauge, WrenchBrake system pressure below safe operating level.H!79Loose BoltMEDIUMRepairWrench, Torque DriverBolt loose on panel 3.
+ôôÝ/sqlb_temp_table_1
+faults
+r¶EÓ\
+â
+oú™1Ì^
+å
+l
+	“	,Ô_ñß5›rC!O
+Driver Deadman Switch FauC!O
+Driver Deadman Switch FaultCRITICALInspectionDiagnostic Laptop, Circuit TesterDeadman safety switch not registering driver presence correctly.
+5!K
+Coupler Lock FailureCRITICALInspectionLocking Tool Kit, Torque WrenchCoupler locking mechanism unable to securely connect tram units.;gAir Compressor ShutdownCRITICALRepairPressure Gauge, Socket Set, Replacement ValveMain pneumatic compressor has stopped operating unexpectedly.'UcPassenger Emergency Intercom FailureCRITICALRepairMultimeter, Replacement Module, ScrewdriverEmergency intercom system unavailable across all passenger cabins.1!mBogie Frame DamageCRITICALInspectionInspection Mirror, Flashlight, Ultrasonic TesterCrack detected on bogie frame affecting wheel assembly stability.p1!CiTrack Sensor FaultHIGHInspectionDiagnostic Tool, MultimeterTrack proximity sensor returning invalid data.l3#EWCooling Fan FailureMEDIUMReplacementReplacement Fan, ScrewdriverCooling fan not rotating as expected.s9#IaCabin Lighting FailureLOWReplacementReplacement Light, ScrewdriverPassenger cabin lighting partially failed.V/1QDoor Actuator JamHIGHRepairLubricant, Hex KeyDoor actuator movement restricted.e)#9cBrake Pad WearHIGHReplacementBrake Tool Kit, GlovesBrake pads worn below acceptable thickness.vC#CcDestination Display FailureLOWReplacementDisplay Module, ScrewdriverExternal route display blank or flickering._%#;YDamaged FuseHIGHReplacementFuse Puller, MultimeterFuse blown due to electrical overload.w7IsLoose Internal WiringHIGHRepairWire Stripper, Insulation TapeWiring behind control panel partially disconnected.w
+7!AoPassenger Alarm FaultMEDIUMInspectionMultimeter, Wiring DiagramPassenger emergency alarm circuit not responding.l+!AeSuspension WearMEDIUMInspectionInspection Kit, FlashlightSuspension components showing material wear.c
+/#GMHeadlight FailureLOWReplacementReplacement Bulb, ScrewdriverFront headlight non-operational.f	/CcCab Display ErrorLOWResetLaptop, Diagnostic SoftwareDriver display showing communication error._%;_HVAC FailureMEDIUMRepairMultimeter, ScrewdriverPassenger cabin HVAC unit not responding.s+%EkWheel Flat SpotMEDIUMMaintenance Inspection Gauge, FlashlightWheel surface shows flattening from brake lock.q5#9oBattery Voltage DropHIGHReplacementBattery Tester, GlovesAuxiliary battery output below operating voltage.x;!EmTraction Motor OverheatHIGHInspectionThermal Scanner, ScrewdriverMotor temperature exceeds recommended threshold.u;!9sPantograph MisalignmentHIGHAdjustmentAlignment Tool, WrenchPantograph not properly aligned with overhead wire.p3#;mDoor Sensor FailureHIGHReplacementMultimeter, ScrewdriverDoor sensor not detecting obstruction correctly.o3!9oBrake Pressure LossHIGHInspectionPressure Gauge, WrenchBrake system pressure below safe operating level.H!79Loose BoltMEDIUMRepairWrench, Torque DriverBolt loose
