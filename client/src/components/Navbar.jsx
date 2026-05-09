@@ -1,56 +1,131 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
-  const { user } = useAuth();
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
-  async function handleLogout() {
-    await fetch("/api/auth/logout", {
-      method: "POST",
-      credentials: "include"
-    });
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const res = await fetch("/api/auth/me", {
+          credentials: "include",
+        });
 
-    navigate("/login");
-  }
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+
+        const data = await res.json();
+        setUser(data.user);
+      } catch (err) {
+        console.error(err);
+        setUser(null);
+      }
+    }
+
+    loadUser();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      localStorage.removeItem("user");
+      setUser(null);
+
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
-    <div style={{
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      background: "#16213e",
-      color: "white",
-      padding: "10px 20px",
-      marginBottom: 20
-    }}>
+    <nav
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "16px 24px",
+        background: "#111827",
+        color: "white",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          gap: "18px",
+          alignItems: "center",
+        }}
+      >
+        <Link to="/dashboard" style={linkStyle}>
+          Dashboard
+        </Link>
 
-      {/* LEFT */}
-      <div>
-        <Link to="/" style={{ color: "white", marginRight: 10 }}>Dashboard</Link>
-        <Link to="/tools" style={{ color: "white", marginRight: 10 }}>Tool Tracker</Link>
+        <Link to="/tools" style={linkStyle}>
+          Tools
+        </Link>
+
+        <Link to="/ar" style={linkStyle}>
+          AR
+        </Link>
 
         {user?.role === "admin" && (
-          <Link to="/faults" style={{ color: "white", marginRight: 10 }}>
-            Faults Logs
-          </Link>
-        )}
+          <>
+            <Link to="/faults" style={linkStyle}>
+              Fault Logs
+            </Link>
 
-        <Link to="/ar" style={{ color: "white" }}>AR</Link>
+            <Link to="/logs" style={linkStyle}>
+              Audit Logs
+            </Link>
+          </>
+        )}
       </div>
 
-      {/* RIGHT */}
-      <div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "14px",
+        }}
+      >
         {user && (
-          <span style={{ marginRight: 10 }}>
-            Logged in as <strong>{user.username}</strong> (Role: {user.role})
+          <span
+            style={{
+              fontSize: "14px",
+              opacity: 0.85,
+            }}
+          >
+            Logged in as {user.username} ({user.role})
           </span>
         )}
-        <button onClick={handleLogout}>
+
+        <button
+          onClick={handleLogout}
+          style={{
+            background: "#ef4444",
+            border: "none",
+            padding: "8px 14px",
+            borderRadius: "8px",
+            color: "white",
+            cursor: "pointer",
+            fontWeight: 600,
+          }}
+        >
           Logout
         </button>
       </div>
-
-    </div>
+    </nav>
   );
 }
+
+const linkStyle = {
+  color: "white",
+  textDecoration: "none",
+  fontWeight: 500,
+};

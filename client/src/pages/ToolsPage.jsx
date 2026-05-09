@@ -37,7 +37,6 @@ export default function ToolsPage() {
     loadTools();
   };
 
-  // delete tool
   const handleDelete = async (id) => {
     try {
       await deleteTool(id);
@@ -59,6 +58,7 @@ export default function ToolsPage() {
       <div className="tool-card">
         <h2 className="heading-style">Tools</h2>
         <Filters onFilter={setFilter} />
+
         <ToolList
           tools={tools}
           onToggle={handleToggle}
@@ -68,15 +68,42 @@ export default function ToolsPage() {
       </div>
 
       <div className="tool-card">
-
-  
         <h2 className="heading-style">Details</h2>
+
         {selected ? (
           <div>
-            <p><b>Name</b>: {selected.name}</p>
-            <p><b>Type:</b> {selected.type}</p>
-            <p><b>Status: </b>{selected.status}</p>
-            <p><b>Last User:</b> added when merge</p> 
+            <p>
+              <b>Name:</b> {selected.name}
+            </p>
+
+            <p>
+              <b>Type:</b> {selected.type}
+            </p>
+
+            <p>
+              <b>Location:</b> {selected.location}
+            </p>
+
+            <p>
+              <b>Status:</b> {selected.status}
+            </p>
+
+            <p>
+              <b>Created By:</b>{" "}
+              {selected.created_by || "Unknown"}
+            </p>
+
+            <p>
+              <b>Last Updated By:</b>{" "}
+              {selected.last_checked_by || "Unknown"}
+            </p>
+
+            <p>
+              <b>Last Checked:</b>{" "}
+              {selected.last_checked
+                ? new Date(selected.last_checked).toLocaleString()
+                : "Never"}
+            </p>
           </div>
         ) : (
           <p>Click to view details of the tool.</p>

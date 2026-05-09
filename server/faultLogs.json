@@ -1,5 +1,15 @@
 [
   {
+    "id": 1778243932260,
+    "faultName": "Brake Pressure Loss",
+    "severity": "HIGH",
+    "serviceType": "Inspection",
+    "toolsNeeded": "Pressure Gauge, Wrench",
+    "description": "Several missing tools indicate incomplete brake maintenance procedures.",
+    "detectedAt": "2026-05-08T12:38:52.260Z",
+    "resolved": false
+  },
+  {
     "id": 1778177898187,
     "faultName": "Loose Bolt",
     "severity": "MEDIUM",

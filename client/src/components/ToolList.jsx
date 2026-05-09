@@ -1,51 +1,73 @@
-import "../styles/ToolsPage.css";
-import { useAuth } from "../context/AuthContext";
+import { useEffect, useState } from "react";
 
-export default function ToolList({ tools, onToggle, onSelect, onDelete }) {
-  const { user } = useAuth();
+export default function ToolList({
+  tools,
+  onToggle,
+  onSelect,
+  onDelete,
+}) {
+  const [user, setUser] = useState(null);
 
-  if (!Array.isArray(tools)) return <p>Loading...</p>;
+  useEffect(() => {
+    const stored = localStorage.getItem("user");
+
+    if (stored) {
+      setUser(JSON.parse(stored));
+    }
+  }, []);
+
+  if (!Array.isArray(tools)) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>
       {tools.map((tool) => (
         <div key={tool.id} className="tool-card">
-          <strong className="name-style">{tool.name}</strong> ({tool.status})
+          <strong className="name-style">
+            {tool.name}
+          </strong>
+
+          <p>Status: {tool.status}</p>
+
+          <p>Location: {tool.location}</p>
+
+          <p>
+            Last Updated By:{" "}
+            {tool.last_checked_by || "Unknown"}
+          </p>
 
           <div>
             <button
-              className="general-button"
-              onClick={() => onToggle(tool, "in-use")}
-            >
-              Use
-            </button>
-
-            <button
-              className="general-button"
               onClick={() => onToggle(tool, "available")}
             >
-              Return
+              Available
             </button>
 
             <button
-              className="general-button"
+              onClick={() => onToggle(tool, "in-use")}
+            >
+              In Use
+            </button>
+
+            <button
               onClick={() => onToggle(tool, "missing")}
             >
               Missing
             </button>
 
-            <button
-              className="general-button"
-              onClick={() => onSelect(tool)}
-            >
+            <button onClick={() => onSelect(tool)}>
               Details
             </button>
 
-            {/* ROLE-BASED DELETE */}
             {user?.role === "admin" && (
               <button
-                className="delete-button"
                 onClick={() => onDelete(tool.id)}
+                style={{
+                  background: "crimson",
+                  color: "white",
+                  marginLeft: 8,
+                }}
               >
                 Delete
               </button>

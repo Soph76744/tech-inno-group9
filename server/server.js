@@ -97,13 +97,20 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tools", requireAuth, toolRoutes);
 app.use("/api/faults", requireAuth, requireRole("admin"), faultRoutes);
 
+// Audit logs endpoint
 app.get("/api/logs", requireAuth, async (req, res) => {
   try {
-    const logs = await Log.findAll();
+    const logs = await Log.findAll({
+      order: [["createdAt", "DESC"]],
+    });
+
     res.json(logs);
   } catch (err) {
     console.error("LOG READ ERROR:", err);
-    res.status(500).json({ error: "Server error" });
+
+    res.status(500).json({
+      error: "Could not retrieve logs",
+    });
   }
 });
 
@@ -248,7 +255,7 @@ const PORT = process.env.PORT || 3000;
 
 async function startServer() {
   try {
-    await sequelize.sync();
+    await sequelize.sync({ alter: true });
 
     await createUserIfNotExists("admin", "password123", "admin");
     await createUserIfNotExists("engineer1", "password456", "engineer");

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "../styles/DashboardPage.css";
+import PieChart from "../components/PieChart.jsx";
+import BarChart from "../components/BarChart";
 
 export default function DashboardPage() {
-
-  // dummy placeholder data - no database integration yet
-
+  // Dummy placeholder data - no database integration yet
   const [tools] = useState([
     {
       id: 1,
@@ -32,17 +32,17 @@ export default function DashboardPage() {
   const [faults] = useState([
     { id: 1, type: "Door failure", severity: "high" },
     { id: 2, type: "Brake issue", severity: "medium" },
-    { id: 3, type: "Light flicker", severity: "low" }
+    { id: 3, type: "Light flicker", severity: "low" },
+    { id: 4, type: "Light flicker", severity: "low" },
+    { id: 5, type: "Light flicker", severity: "low" }
   ]);
 
-  // most recent tools - based off last checked
-
+  // Most recent tools - based off last checked
   const recentTools = [...tools]
     .sort((a, b) => new Date(b.last_checked) - new Date(a.last_checked))
     .slice(0, 5);
 
-  // fault statistics
-
+  // Fault statistics
   const totalFaults = faults.length;
   const high = faults.filter(f => f.severity === "high").length;
   const medium = faults.filter(f => f.severity === "medium").length;
@@ -50,10 +50,8 @@ export default function DashboardPage() {
 
   return (
     <div className="dashboard-page">
-
       <h1 className="heading-style">Dashboard</h1>
 
-      {/* statistics */}
       <div className="stats-grid">
         <div className="card">Total Faults: {totalFaults}</div>
         <div className="card">High: {high}</div>
@@ -61,10 +59,7 @@ export default function DashboardPage() {
         <div className="card">Low: {low}</div>
       </div>
 
-      {/* main dashboard grid */}
       <div className="dashboard-grid">
-
-        {/* recent tools */}
         <div className="card">
           <h2>Recently Used Tools</h2>
 
@@ -73,25 +68,22 @@ export default function DashboardPage() {
               <div className="tool-name">{t.name}</div>
               ({t.status})<br />
               <small>
-                {t.last_checked_by} • {new Date(t.last_checked).toLocaleTimeString()}
+                {t.last_checked_by} | {new Date(t.last_checked).toLocaleTimeString()}
               </small>
             </div>
           ))}
         </div>
 
-        {/* fault summary */}
         <div className="card">
-          <h2>Fault Summary</h2>
-
-          {faults.map(f => (
-            <div key={f.id}>
-              {f.type} - <span className={f.severity}>{f.severity}</span>
-            </div>
-          ))}
+          <h2>Fault Severity</h2>
+          <PieChart faults={faults} />
         </div>
 
+        <div className="card wide-card">
+          <h2>Fault Types</h2>
+          <BarChart faults={faults} />
+        </div>
       </div>
-
     </div>
   );
 }

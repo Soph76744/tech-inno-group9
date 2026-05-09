@@ -1,26 +1,27 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import Layout from "./layouts/Layout";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RoleProtectedRoute from "./routes/RoleProtectedRoute";
+import Layout from "./layouts/Layout";
 
 import LoginPage from "./pages/LogInPage";
 import DashboardPage from "./pages/DashboardPage";
 import ToolsPage from "./pages/ToolsPage";
 import FaultsPage from "./pages/FaultsPage";
 import ARPage from "./pages/ARPage";
+import AuditLogsPage from "./pages/AuditLogsPage";
 
 export default function App() {
   return (
     <Routes>
 
-      {/* PUBLIC */}
+      {/* Public */}
       <Route path="/login" element={<LoginPage />} />
 
-      {/* PROTECTED WRAPPER */}
+      {/* Protected Wrapper */}
       <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
 
-        {/* CORE PAGES */}
+        {/* Core pages */}
         <Route path="/" element={<DashboardPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/tools" element={<ToolsPage />} />
@@ -34,11 +35,20 @@ export default function App() {
           } 
         />
 
+        <Route 
+          path="/logs" 
+          element={
+            <RoleProtectedRoute role="admin">
+              <AuditLogsPage />
+            </RoleProtectedRoute>
+          } 
+        />
+
         <Route path="/ar" element={<ARPage />} />
 
       </Route>
 
-      {/* fallback */}
+      {/* Fallback */}
       <Route path="*" element={<Navigate to="/" />} />
 
     </Routes>

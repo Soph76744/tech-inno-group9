@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "/api"
+  baseURL: "/api",
+  withCredentials: true,
 });
 
 // Tools
@@ -19,19 +20,22 @@ export const getFaults = () =>
   API.get("/faults");
 
 export const detectFault = () =>
-  API.get("/faults/detect");
+  API.get("/faults/system/detect");
 
-  // potentially remove if unneeded
-  export async function deleteTool(id) {
-    const res = await fetch(`http://localhost:3000/api/tools/${id}`, {
-      method: "DELETE"
-    });
-    const data = await res.json();
-    console.log("Delete response:", data);
-  
-    if (!res.ok) {
-      throw new Error(data.error || "Delete failed");
-    }
-  
-    return data;
+// Delete tool
+export async function deleteTool(id) {
+  const res = await fetch(`/api/tools/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  const data = await res.json();
+
+  console.log("Delete response:", data);
+
+  if (!res.ok) {
+    throw new Error(data.error || "Delete failed");
   }
+
+  return data;
+}

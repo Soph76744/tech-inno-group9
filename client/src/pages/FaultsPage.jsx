@@ -2,85 +2,44 @@ import { useEffect, useState } from "react";
 
 export default function FaultsPage() {
   const [faults, setFaults] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
 
-  async function loadFaultLogs() {
+  async function loadFaults() {
     try {
-      setLoading(true);
-
       const res = await fetch("/api/fault-logs", {
         credentials: "include",
       });
 
-      if (!res.ok) {
-        throw new Error("Could not load fault logs");
-      }
-
       const data = await res.json();
 
       setFaults(Array.isArray(data) ? data : []);
-      setMessage("");
     } catch (err) {
       console.error(err);
       setFaults([]);
-      setMessage("Fault logs could not be loaded.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function markResolved(id) {
-    try {
-      const res = await fetch(`/api/fault-logs/${id}/resolve`, {
-        method: "PATCH",
-        credentials: "include",
-      });
-
-      if (!res.ok) {
-        throw new Error("Could not resolve fault");
-      }
-
-      loadFaultLogs();
-    } catch (err) {
-      console.error(err);
-      setMessage("Could not mark fault as resolved.");
     }
   }
 
   useEffect(() => {
-    loadFaultLogs();
-
-    const interval = setInterval(() => {
-      loadFaultLogs();
-    }, 5000);
-
-    return () => clearInterval(interval);
+    loadFaults();
   }, []);
 
+  async function resolveFault(id) {
+    try {
+      await fetch(`/api/fault-logs/${id}/resolve`, {
+        method: "PATCH",
+        credentials: "include",
+      });
+
+      loadFaults();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
-    <div
-      style={{
-        padding: "24px",
-        fontFamily: "Inter, sans-serif",
-      }}
-    >
+    <div>
       <h1>Fault Logs</h1>
 
-      {message && (
-        <p
-          style={{
-            color: "#ff4d4d",
-            fontWeight: 600,
-          }}
-        >
-          {message}
-        </p>
-      )}
-
-      {loading ? (
-        <p>Loading fault logs...</p>
-      ) : faults.length > 0 ? (
+      {faults.length > 0 ? (
         faults.map((f) => (
           <div
             key={f.id}
@@ -88,29 +47,26 @@ export default function FaultsPage() {
               border: "1px solid #ccc",
               padding: "14px",
               margin: "12px 0",
-              borderRadius: "8px",
-              background: f.resolved ? "#f1f1f1" : "#fff7f7",
+              borderRadius: "10px",
+              background: f.resolved
+                ? "#f0fdf4"
+                : "#fff7ed",
             }}
           >
-            <h3 style={{ margin: "0 0 8px" }}>
-              {f.faultName || "Unknown Fault"}
-            </h3>
+            <strong
+              style={{
+                fontSize: "18px",
+              }}
+            >
+              {f.faultName}
+            </strong>
 
             <p>
-              <b>Severity:</b> {f.severity || "Unknown"}
+              <b>Severity:</b> {f.severity}
             </p>
 
             <p>
-              <b>Service:</b> {f.serviceType || "Inspection"}
-            </p>
-
-            <p>
-              <b>Tools Needed:</b> {f.toolsNeeded || "Standard toolkit"}
-            </p>
-
-            <p>
-              <b>Description:</b>{" "}
-              {f.description || "No description available"}
+              <b>Service:</b> {f.serviceType}
             </p>
 
             <p>
@@ -119,21 +75,34 @@ export default function FaultsPage() {
             </p>
 
             <p>
-              <b>Detected At:</b>{" "}
-              {f.detectedAt
-                ? new Date(f.detectedAt).toLocaleString()
-                : "Unknown"}
+              <b>Detected:</b>{" "}
+              {new Date(f.detectedAt).toLocaleString()}
+            </p>
+
+            {f.resolvedAt && (
+              <p>
+                <b>Resolved:</b>{" "}
+                {new Date(f.resolvedAt).toLocaleString()}
+              </p>
+            )}
+
+            <p>
+              <b>Description:</b> {f.description}
+            </p>
+
+            <p>
+              <b>Tools Needed:</b> {f.toolsNeeded}
             </p>
 
             {!f.resolved && (
               <button
-                onClick={() => markResolved(f.id)}
+                onClick={() => resolveFault(f.id)}
                 style={{
-                  marginTop: "8px",
-                  padding: "8px 14px",
-                  borderRadius: "8px",
+                  marginTop: 10,
+                  padding: "10px 14px",
                   border: "none",
-                  background: "#00a86b",
+                  borderRadius: "8px",
+                  background: "#22c55e",
                   color: "white",
                   cursor: "pointer",
                   fontWeight: 600,
