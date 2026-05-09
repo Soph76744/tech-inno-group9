@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/ToolsPage.css";
 
-
+// Form for users to submit their tools manually
 export default function ToolForm({ onAdd }) {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
@@ -16,7 +16,7 @@ export default function ToolForm({ onAdd }) {
     setType("");
     setLocation("");
   };
-
+  // Displaying tool form with card styling
   return (
     <div className="tool-card">
       <h2>Add Tool</h2>

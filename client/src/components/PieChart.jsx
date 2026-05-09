@@ -1,49 +1,42 @@
-import {
-    PieChart as RePieChart,
-    Pie,
-    Cell,
-    Tooltip,
-    Legend,
-    ResponsiveContainer,
-  } from "recharts";
-  
-  export default function PieChart({ faults }) {
-    const high = faults.filter((f) => f.severity === "high").length;
-    const medium = faults.filter((f) => f.severity === "medium").length;
-    const low = faults.filter((f) => f.severity === "low").length;
-  
-    const data = [
-      { name: "High", value: high },
-      { name: "Medium", value: medium },
-      { name: "Low", value: low },
-    ];
-  
-    const COLORS = ["#ef4444", "#f59e0b", "#22c55e"];
-  
-    return (
-      <div style={{ width: "100%", height: 260 }}>
-        <ResponsiveContainer>
-          <RePieChart>
-            <Pie
-              data={data}
-              dataKey="value"
-              nameKey="name"
-              outerRadius={85}
-              label
-            >
-              {data.map((entry, index) => (
-                <Cell
-                  key={`cell-${entry.name}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-  
-            <Tooltip />
-            <Legend />
-          </RePieChart>
-        </ResponsiveContainer>
-      </div>
-    );
-  }
-  
+import { Chart } from "react-google-charts";
+
+// Faults chart
+export default function PieChart({ faults }) {
+
+  // For fault severities
+  const high = faults.filter(f => f.severity === "HIGH").length;
+  const medium = faults.filter(f => f.severity === "MEDIUM").length;
+  const low = faults.filter(f => f.severity === "LOW").length;
+
+  // Chart data
+  const data = [
+    ["Severity", "Count"],
+    ["High", high],
+    ["Medium", medium],
+    ["Low", low],
+  ];
+
+  // Styling options
+  const options = {
+    pieHole: 0.4,
+    colors: ["#C2472F", "#E6B44E", "#90D938"],
+    backgroundColor: "#737D9E",
+    legend: {
+      textStyle: {
+        color: "black",
+        fontName: "Consolas",
+      },
+    },
+  };
+
+  // Display chart
+  return (
+    <Chart
+      chartType="PieChart"
+      data={data}
+      options={options}
+      width={"100%"}
+      height={"300px"}
+    />
+  );
+}

@@ -1,34 +1,36 @@
 import { useEffect, useState } from "react";
+import "../styles/FaultsPage.css";
 
 export default function FaultsPage() {
   const [faults, setFaults] = useState([]);
-
   async function loadFaults() {
     try {
       const res = await fetch("/api/fault-logs", {
         credentials: "include",
       });
-
       const data = await res.json();
+      setFaults(
+        Array.isArray(data) ? data : []
+      );
 
-      setFaults(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
       setFaults([]);
     }
   }
-
   useEffect(() => {
     loadFaults();
   }, []);
 
   async function resolveFault(id) {
     try {
-      await fetch(`/api/fault-logs/${id}/resolve`, {
-        method: "PATCH",
-        credentials: "include",
-      });
-
+      await fetch(
+        `/api/fault-logs/${id}/resolve`,
+        {
+          method: "PATCH",
+          credentials: "include",
+        }
+      );
       loadFaults();
     } catch (err) {
       console.error(err);
@@ -36,85 +38,83 @@ export default function FaultsPage() {
   }
 
   return (
-    <div>
-      <h1>Fault Logs</h1>
-
+    <div className="faults-page">
+      <h1 className="heading-style">
+        Fault Logs
+      </h1>
       {faults.length > 0 ? (
         faults.map((f) => (
           <div
             key={f.id}
-            style={{
-              border: "1px solid #ccc",
-              padding: "14px",
-              margin: "12px 0",
-              borderRadius: "10px",
-              background: f.resolved
-                ? "#f0fdf4"
-                : "#fff7ed",
-            }}
+            className={`fault-card ${
+              f.resolved
+                ? "resolved-fault"
+                : "active-fault"
+            }`}
           >
-            <strong
-              style={{
-                fontSize: "18px",
-              }}
-            >
-              {f.faultName}
-            </strong>
 
-            <p>
+            <div className="fault-name">
+              {f.faultName}
+            </div>
+
+            <p className="fault-info">
               <b>Severity:</b> {f.severity}
             </p>
 
-            <p>
+            <p className="fault-info">
               <b>Service:</b> {f.serviceType}
             </p>
 
-            <p>
+            <p className="fault-info">
               <b>Status:</b>{" "}
-              {f.resolved ? "Resolved" : "Active"}
+              {f.resolved
+                ? "Resolved"
+                : "Active"}
             </p>
 
-            <p>
+            <p className="fault-info">
               <b>Detected:</b>{" "}
-              {new Date(f.detectedAt).toLocaleString()}
+              {new Date(
+                f.detectedAt
+              ).toLocaleString()}
             </p>
 
             {f.resolvedAt && (
-              <p>
+              <p className="fault-info">
                 <b>Resolved:</b>{" "}
-                {new Date(f.resolvedAt).toLocaleString()}
+                {new Date(
+                  f.resolvedAt
+                ).toLocaleString()}
               </p>
             )}
 
-            <p>
-              <b>Description:</b> {f.description}
+            <p className="fault-info">
+              <b>Description:</b>{" "}
+              {f.description}
             </p>
 
-            <p>
-              <b>Tools Needed:</b> {f.toolsNeeded}
+            <p className="fault-info">
+              <b>Tools Needed:</b>{" "}
+              {f.toolsNeeded}
             </p>
 
             {!f.resolved && (
               <button
-                onClick={() => resolveFault(f.id)}
-                style={{
-                  marginTop: 10,
-                  padding: "10px 14px",
-                  border: "none",
-                  borderRadius: "8px",
-                  background: "#22c55e",
-                  color: "white",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                }}
+                className="resolve-button"
+                onClick={() =>
+                  resolveFault(f.id)
+                }
               >
                 Mark Resolved
               </button>
             )}
           </div>
         ))
+
       ) : (
-        <p>No fault logs found</p>
+        <p className="no-faults">
+          No fault logs found
+        </p>
       )}
     </div>
   );

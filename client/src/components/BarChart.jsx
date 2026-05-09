@@ -1,40 +1,61 @@
-import {
-    BarChart as ReBarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    Tooltip,
-    CartesianGrid,
-    ResponsiveContainer,
-  } from "recharts";
-  
-  export default function BarChart({ faults }) {
-    const counts = {};
-  
-    faults.forEach((f) => {
-      counts[f.type] = (counts[f.type] || 0) + 1;
-    });
-  
-    const data = Object.keys(counts).map((key) => ({
-      type: key,
-      count: counts[key],
-    }));
-  
-    return (
-      <div style={{ width: "100%", height: 320 }}>
-        <ResponsiveContainer>
-          <ReBarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-  
-            <XAxis dataKey="type" />
-            <YAxis />
-  
-            <Tooltip />
-  
-            <Bar dataKey="count" fill="#3b82f6" />
-          </ReBarChart>
-        </ResponsiveContainer>
-      </div>
-    );
-  }
-  
+import { Chart } from "react-google-charts";
+
+// Number of fault types
+export default function BarChart({ faults = [] }) {
+
+  // Count faults by name
+  const counts = faults.reduce((acc, fault) => {
+
+    acc[fault.faultName] =
+      (acc[fault.faultName] || 0) + 1;
+
+    return acc;
+
+  }, {});
+
+  // Convert to chart format
+  const data = [
+    ["Fault Type", "Number"],
+    ...Object.entries(counts)
+  ];
+
+  // Styling options
+  const options = {
+    backgroundColor: "#737D9E",
+    bars: "vertical",
+    colors: ["#E5F2FF"],
+    legend: {
+      textStyle: {
+        color: "black",
+        fontName: "Consolas",
+      },
+    },
+    hAxis: {
+      textStyle: {
+        color: "black",
+        fontName: "Consolas",
+      },
+    },
+    vAxis: {
+      textStyle: {
+        color: "black",
+        fontName: "Consolas",
+      },
+    },
+    chartArea: {
+      width: "80%",
+      height: "70%",
+    },
+  };
+
+  // Display chart
+  return (
+    <Chart
+      chartType="BarChart"
+      width="100%"
+      height="300px"
+      data={data}
+      options={options}
+    />
+  );
+}

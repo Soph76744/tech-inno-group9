@@ -7,7 +7,8 @@
     "toolsNeeded": "Pressure Gauge, Wrench",
     "description": "Several missing tools indicate incomplete brake maintenance procedures.",
     "detectedAt": "2026-05-08T12:38:52.260Z",
-    "resolved": false
+    "resolved": false,
+    "resolvedAt": "2026-05-09T11:34:46.915Z"
   },
   {
     "id": 1778177898187,
@@ -40,5 +41,15 @@
     "detectedAt": "2026-05-07T18:15:22.448Z",
     "resolved": true,
     "resolvedAt": "2026-05-07T18:16:44.733Z"
+  },
+  {
+    "id": 1778177722449,
+    "faultName": "Tram Inspection",
+    "severity": "LOW",
+    "serviceType": "Maintenance",
+    "toolsNeeded": "Wrench",
+    "description": "Regular maintenance review required for inspection.",
+    "detectedAt": "2026-05-07T18:15:22.448Z",
+    "resolved": false
   }
 ]

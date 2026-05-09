@@ -217,6 +217,30 @@ app.patch(
   }
 );
 
+const fs = require("fs");
+app.get("/api/fault-logs", (req, res) => {
+  try {
+    const logsPath = path.join(__dirname, "faultLogs.json");
+    if (!fs.existsSync(logsPath)) {
+      return res.json([]);
+    }
+
+    const data = fs.readFileSync(logsPath, "utf8");
+    if (!data.trim()) {
+      return res.json([]);
+    }
+
+    const logs = JSON.parse(data);
+    res.json(logs);
+
+  } catch (err) { //
+    console.error(err);
+    res.status(500).json({
+      error: "Could not load fault logs"
+    });
+  }
+});
+
 // React Frontend
 const clientPath = path.join(__dirname, "../client/dist");
 

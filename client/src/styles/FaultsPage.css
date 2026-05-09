@@ -1,0 +1,67 @@
+.faults-page {
+    min-height: 100vh;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+  }
+  
+  .heading-style {
+    font-family: "Lucida Console", monospace;
+    color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  
+  .fault-card {
+    border: 2px solid black;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 16px;
+    box-shadow: 4px 4px black;
+    font-family: "Lucida Console", monospace;
+  }
+  
+  /* Active faults */
+  .active-fault {
+    background-color: #737D9E;
+  }
+  
+  /* Resolved faults */
+  .resolved-fault {
+    background-color: #aaaebc;
+  }
+  
+  .fault-name {
+    font-family: "Consolas", monospace;
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .fault-info {
+    margin: 6px 0;
+    color: black;
+  }
+  
+  .resolve-button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.5em 1em;
+    margin-top: 10px;
+    font-size: 0.85em;
+    font-weight: bold;
+    font-family: "Lucida Console", monospace;
+    color: black;
+    background-color: #424a65;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 3px 3px black;
+  }
+
+  
+  .no-faults {
+    font-family: "Lucida Console", monospace;
+    text-align: center;
+    margin-top: 40px;
+  }

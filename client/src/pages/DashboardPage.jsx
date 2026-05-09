@@ -1,77 +1,132 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/DashboardPage.css";
 import PieChart from "../components/PieChart.jsx";
 import BarChart from "../components/BarChart";
 
 export default function DashboardPage() {
-  // Dummy placeholder data - no database integration yet
-  const [tools] = useState([
-    {
-      id: 1,
-      name: "Wrench",
-      status: "available",
-      last_checked_by: "admin",
-      last_checked: "2026-01-01T10:30:00"
-    },
-    {
-      id: 2,
-      name: "Hammer",
-      status: "in-use",
-      last_checked_by: "admin",
-      last_checked: "2026-01-01T11:15:00"
-    },
-    {
-      id: 3,
-      name: "Drill",
-      status: "missing",
-      last_checked_by: "engineer1",
-      last_checked: "2026-01-01T12:05:00"
-    }
-  ]);
 
-  const [faults] = useState([
-    { id: 1, type: "Door failure", severity: "high" },
-    { id: 2, type: "Brake issue", severity: "medium" },
-    { id: 3, type: "Light flicker", severity: "low" },
-    { id: 4, type: "Light flicker", severity: "low" },
-    { id: 5, type: "Light flicker", severity: "low" }
-  ]);
+  // Tool data from backend
+  const [tools, setTools] = useState([]);
+
+  // Fault log data
+  const [faults, setFaults] = useState([]);
+
+  // Load dashboard data
+  useEffect(() => {
+    loadTools();
+    loadFaults();
+  }, []);
+
+  // Load tools from database
+  async function loadTools() {
+    try {
+      const res = await fetch("/api/tools", {
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setTools(data);
+      } else {
+        setTools([]);
+      }
+    } catch (err) {
+      console.error(err);
+      setTools([]);
+    }
+  }
+
+  // Load fault logs
+  async function loadFaults() {
+    try {
+      const res = await fetch("/api/fault-logs", {
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        // Only unresolved faults are shown due to severity
+        const activeFaults = data.filter(
+          f => !f.resolved
+        );
+        setFaults(activeFaults);
+      } else {
+        setFaults([]);
+      }
+    } catch (err) {
+      console.error(err);
+      setFaults([]);
+    }
+  }
 
   // Most recent tools - based off last checked
   const recentTools = [...tools]
-    .sort((a, b) => new Date(b.last_checked) - new Date(a.last_checked))
+    .sort(
+      (a, b) =>
+        new Date(b.last_checked) -
+        new Date(a.last_checked)
+    )
     .slice(0, 5);
 
   // Fault statistics
   const totalFaults = faults.length;
-  const high = faults.filter(f => f.severity === "high").length;
-  const medium = faults.filter(f => f.severity === "medium").length;
-  const low = faults.filter(f => f.severity === "low").length;
+  const high = faults.filter(
+    f => f.severity === "HIGH"
+  ).length;
+  const medium = faults.filter(
+    f => f.severity === "MEDIUM"
+  ).length;
+  const low = faults.filter(
+    f => f.severity === "LOW"
+  ).length;
 
   return (
     <div className="dashboard-page">
-      <h1 className="heading-style">Dashboard</h1>
-
+      <h1 className="heading-style">
+        Dashboard
+      </h1>
       <div className="stats-grid">
-        <div className="card">Total Faults: {totalFaults}</div>
-        <div className="card">High: {high}</div>
-        <div className="card">Medium: {medium}</div>
-        <div className="card">Low: {low}</div>
+        <div className="card">
+          Total Faults: {totalFaults}
+        </div>
+        <div className="card">
+          High: {high}
+        </div>
+        <div className="card">
+          Medium: {medium}
+        </div>
+        <div className="card">
+          Low: {low}
+        </div>
       </div>
 
       <div className="dashboard-grid">
         <div className="card">
           <h2>Recently Used Tools</h2>
+          {recentTools.length > 0 ? (
+            recentTools.map(t => (
+              <div
+                key={t.id}
+                style={{
+                  marginBottom: "12px"
+                }}
+              >
+                <div className="tool-name">
+                  {t.name}
+                </div>
+                ({t.status})
+                <br />
+                <small>
+                  {t.last_checked_by}
+                  {" | "}
+                  {new Date(
+                    t.last_checked
+                  ).toLocaleString()}
+                </small>
+              </div>
+            ))
+          ) : (
+            <p>No tools found</p>
+          )}
 
-          {recentTools.map(t => (
-            <div key={t.id}>
-              <div className="tool-name">{t.name}</div>
-              ({t.status})<br />
-              <small>
-                {t.last_checked_by} | {new Date(t.last_checked).toLocaleTimeString()}
-              </small>
-            </div>
-          ))}
         </div>
 
         <div className="card">
