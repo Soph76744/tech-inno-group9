@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../styles/DashboardPage.css";
 import PieChart from "../components/PieChart.jsx";
 import BarChart from "../components/BarChart";
+// Importing charts created using React Google Charts ^
 
 export default function DashboardPage() {
 
@@ -78,11 +79,11 @@ export default function DashboardPage() {
     f => f.severity === "LOW"
   ).length;
 
+  // Dashboard display
   return (
     <div className="dashboard-page">
-      <h1 className="heading-style">
-        Dashboard
-      </h1>
+      <h1 className="heading-style"> Dashboard </h1>
+      {/* Statistics shown as cards in a 'grid' along top showing total severity of unresolved faults */}
       <div className="stats-grid">
         <div className="card">
           Total Faults: {totalFaults}
@@ -97,8 +98,9 @@ export default function DashboardPage() {
           Low: {low}
         </div>
       </div>
-
+      {/* Main dashboard grid layout */}
       <div className="dashboard-grid">
+        {/* Recent tools mapped on card: shows last user and time last checked*/}
         <div className="card">
           <h2>Recently Used Tools</h2>
           {recentTools.length > 0 ? (
@@ -113,13 +115,11 @@ export default function DashboardPage() {
                   {t.name}
                 </div>
                 ({t.status})
-                <br />
+                <br/>
                 <small>
                   {t.last_checked_by}
                   {" | "}
-                  {new Date(
-                    t.last_checked
-                  ).toLocaleString()}
+                  {new Date(t.last_checked).toLocaleString()}
                 </small>
               </div>
             ))
@@ -128,12 +128,12 @@ export default function DashboardPage() {
           )}
 
         </div>
-
+        {/* Fault severity pie chart */}
         <div className="card">
           <h2>Fault Severity</h2>
           <PieChart faults={faults} />
         </div>
-
+        {/* Fault types bar chart along bottom */}
         <div className="card wide-card">
           <h2>Fault Types</h2>
           <BarChart faults={faults} />

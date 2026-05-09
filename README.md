@@ -10,7 +10,7 @@ npm run dev //
 //
 SERVER: 
 npm install express sequelize sqlite3 dotenv joi cors 
-npm install bycrypt express-session // 
+npm install bcrypt express-session // BCRYPT
 node server.js OR npm start - (only works if you have start script in package.json: "start": "node server.js",) //
 
 Logins 

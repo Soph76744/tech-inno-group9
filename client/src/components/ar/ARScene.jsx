@@ -6,7 +6,7 @@ export default function ARScene({
     tool,
     fault,
     showDetails,
-    toolColors,
+    toolColours,
     toolLabels,
   }) {
     if (!arReady) {
@@ -41,7 +41,7 @@ export default function ARScene({
                 rotation="-90 0 0"
                 radius-inner="0.8"
                 radius-outer="0.95"
-                color={toolColors[tool.status]}
+                color={toolColours[tool.status]}
                 opacity="0.55"
               />
   

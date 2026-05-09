@@ -75,7 +75,7 @@ export default function ToolsPage() {
             <p><b>Type:</b> {selected.type}</p>
             <p><b>Location:</b> {selected.location}</p>
             <p><b>Status:</b> {selected.status}</p>
-            <p>
+            <p> {/* If no known user is there, show Unknown */}
               <b>Created By:</b>
               {" "}
               {selected.created_by || "Unknown"}
@@ -89,8 +89,7 @@ export default function ToolsPage() {
               <b>Last Checked:</b>
               {" "}
               {selected.last_checked
-                ? new Date(selected.last_checked).toLocaleString()
-                : "Never"}
+                ? new Date(selected.last_checked).toLocaleString() : "Never"}
             </p>
           </div>
         ) : (
