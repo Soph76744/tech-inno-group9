@@ -1,29 +1,67 @@
 .audit-page {
-    padding: 10px;
+  min-height: 100vh;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  padding: 20px;
+}
+
+/* Main title */
+.heading-style {
+  font-family: 'Lucida Console', monospace;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+/* 2-column layout */
+.audit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Main panel containers */
+.log-panel {
+  border: 2px solid black;
+  border-radius: 12px;
+  padding: 12px;
+  background-color: #aaaebc;
+  box-shadow: 4px 4px black;
+  font-family: 'Lucida Console', monospace;
+}
+
+/* Individual log entries */
+.log-card {
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 12px;
+  background-color: #d3d7e3;
+  box-shadow: 3px 3px black;
+  font-family: 'Lucida Console', monospace;
+  color: black;
+}
+
+/* Section titles */
+.log-panel h2 {
+  font-family: 'Lucida Console', monospace;
+  text-align: center;
+  margin-bottom: 15px;
+  color: black;
+}
+
+/* Timestamp */
+.timestamp {
+  font-size: 0.8em;
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+/* Mobile responsive */
+@media (max-width: 900px) {
+  .audit-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .audit-card {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 16px;
-    margin: 12px 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  }
-  
-  .audit-card p {
-    margin: 6px 0;
-  }
-  
-  .audit-action {
-    font-weight: 700;
-    color: #111827;
-  }
-  
-  .audit-type {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 999px;
-    background: #e5e7eb;
-    font-size: 13px;
-  }
+}

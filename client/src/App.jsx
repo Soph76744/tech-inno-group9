@@ -25,15 +25,7 @@ export default function App() {
         <Route path="/" element={<DashboardPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/tools" element={<ToolsPage />} />
-
-        <Route 
-          path="/faults" 
-          element={
-            <RoleProtectedRoute role="admin">
-              <FaultsPage />
-            </RoleProtectedRoute>
-          } 
-        />
+        <Route path="/faults" element={<FaultsPage />} />
 
         <Route 
           path="/logs" 

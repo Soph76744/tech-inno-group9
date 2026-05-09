@@ -95,41 +95,44 @@ function requireRole(role) {
 // API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/tools", requireAuth, toolRoutes);
-app.use("/api/faults", requireAuth, requireRole("admin"), faultRoutes);
+app.use("/api/faults", requireAuth, faultRoutes);
 
-// Audit logs endpoint
-app.get("/api/logs", requireAuth, async (req, res) => {
+// Audit logs route
+app.get("/api/logs", async (req, res) => {
   try {
+
     const logs = await Log.findAll({
       order: [["createdAt", "DESC"]],
+      limit: 200
     });
 
-    res.json(logs);
+    // ACCESS / AUTHENTICATION LOGS
+    const accessLogs = logs.filter(log =>
+      log.type === "access" ||
+      log.type === "authentication"
+    );
+
+    // TOOL MODIFICATION LOGS
+    const toolLogs = logs.filter(log =>
+      log.tool_id !== null
+    );
+
+    res.json({
+      accessLogs,
+      toolLogs
+    });
+
   } catch (err) {
-    console.error("LOG READ ERROR:", err);
+    console.error("LOG ROUTE ERROR:", err);
 
     res.status(500).json({
-      error: "Could not retrieve logs",
-    });
-  }
-});
-
-// READ ALL FAULT LOGS
-app.get("/api/fault-logs", requireAuth, requireRole("admin"), (req, res) => {
-  try {
-    const logs = readFaultLogs();
-    return res.json(logs);
-  } catch (err) {
-    console.error("FAULT LOG READ ERROR:", err);
-
-    return res.status(500).json({
-      error: "Failed to load fault logs",
+      error: "Failed to load logs"
     });
   }
 });
 
 // CREATE FAULT LOG
-app.post("/api/fault-logs", requireAuth, requireRole("admin"), (req, res) => {
+app.post("/api/fault-logs", requireAuth, (req, res) => {
   try {
     const logs = readFaultLogs();
 
@@ -186,7 +189,6 @@ app.post("/api/fault-logs", requireAuth, requireRole("admin"), (req, res) => {
 app.patch(
   "/api/fault-logs/:id/resolve",
   requireAuth,
-  requireRole("admin"),
   (req, res) => {
     try {
       const logs = readFaultLogs();
@@ -217,25 +219,33 @@ app.patch(
   }
 );
 
-const fs = require("fs");
-app.get("/api/fault-logs", (req, res) => {
+// GET ALL FAULT LOGS
+// Accessible by ALL authenticated users
+app.get("/api/fault-logs", requireAuth, (req, res) => {
   try {
-    const logsPath = path.join(__dirname, "faultLogs.json");
-    if (!fs.existsSync(logsPath)) {
+    ensureFaultLogsFile();
+
+    const raw = fs.readFileSync(faultLogsPath, "utf8");
+
+    // Empty file safety
+    if (!raw.trim()) {
       return res.json([]);
     }
 
-    const data = fs.readFileSync(logsPath, "utf8");
-    if (!data.trim()) {
-      return res.json([]);
-    }
+    const logs = JSON.parse(raw);
 
-    const logs = JSON.parse(data);
-    res.json(logs);
+    // newest first
+    logs.sort(
+      (a, b) =>
+        new Date(b.detectedAt) - new Date(a.detectedAt)
+    );
 
-  } catch (err) { //
-    console.error(err);
-    res.status(500).json({
+    return res.json(logs);
+
+  } catch (err) {
+    console.error("FAULT LOG READ ERROR:", err);
+
+    return res.status(500).json({
       error: "Could not load fault logs"
     });
   }

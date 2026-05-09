@@ -50,6 +50,7 @@
     "toolsNeeded": "Wrench",
     "description": "Regular maintenance review required for inspection.",
     "detectedAt": "2026-05-07T18:15:22.448Z",
-    "resolved": false
+    "resolved": true,
+    "resolvedAt": "2026-05-09T13:01:59.724Z"
   }
 ]

@@ -67,7 +67,11 @@ export default function Navbar() {
         </Link>
 
         <Link to="/tools" style={linkStyle}>
-          Tools
+          Tool Tracker
+        </Link>
+
+        <Link to="/faults" style={linkStyle}>
+          Fault Logs
         </Link>
 
         <Link to="/ar" style={linkStyle}>
@@ -76,10 +80,6 @@ export default function Navbar() {
 
         {user?.role === "admin" && (
           <>
-            <Link to="/faults" style={linkStyle}>
-              Fault Logs
-            </Link>
-
             <Link to="/logs" style={linkStyle}>
               Audit Logs
             </Link>
