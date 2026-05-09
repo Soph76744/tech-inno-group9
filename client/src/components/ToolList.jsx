@@ -19,60 +19,50 @@ export default function ToolList({
     <div>
       {tools.map((tool) => (
         <div key={tool.id} className="tool-card">
-
           <strong className="name-style">
             {tool.name}
           </strong>
-
           <p>Status: {tool.status}</p>
-
           <p>Location: {tool.location}</p>
-
           <p>
             Last Updated By:
             {" "}
             {tool.last_checked_by || "Unknown"} {/* If no user is given says unknown */}
           </p>
-
           <div> {/* Buttons for each tool to interact with */} 
             <button
               className="general-button"
-              onClick={() => onToggle(tool, "in-use")}
-            >
+              onClick={() => onToggle(tool, "in-use")}>
               Use
             </button>
 
             <button
               className="general-button"
-              onClick={() => onToggle(tool, "available")}
-            >
+              onClick={() => onToggle(tool, "available")}>
               Return
             </button>
 
             <button
               className="general-button"
-              onClick={() => onToggle(tool, "missing")}
-            >
+              onClick={() => onToggle(tool, "missing")}>
               Missing
             </button>
 
             <button
               className="general-button"
-              onClick={() => onSelect(tool)}
-            >
+              onClick={() => onSelect(tool)}>
               Details
             </button>
+
             {/* Delete button only shown to admins */}
             {user?.role === "admin" && (
               <button
                 className="delete-button"
-                onClick={() => onDelete(tool.id)}
-              >
+                onClick={() => onDelete(tool.id)}>
                 Delete
               </button>
             )}
           </div>
-
         </div>
       ))}
     </div>

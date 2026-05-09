@@ -1,7 +1,7 @@
 import { Chart } from "react-google-charts";
 
-// Faults chart
-export default function PieChart({ faults }) {
+// Faults chart using React Google Charts
+export default function PieChart({faults}) {
 
   // For fault severities
   const high = faults.filter(f => f.severity === "HIGH").length;

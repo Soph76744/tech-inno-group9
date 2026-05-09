@@ -1,16 +1,11 @@
 import { Chart } from "react-google-charts";
-
-// Number of fault types
+// Number of fault types bar chart using React Google Charts
 export default function BarChart({ faults = [] }) {
-
-  // Count faults by name
+  // Count faults 
   const counts = faults.reduce((acc, fault) => {
-
     acc[fault.faultName] =
       (acc[fault.faultName] || 0) + 1;
-
     return acc;
-
   }, {});
 
   // Convert to chart format

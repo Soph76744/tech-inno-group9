@@ -1,6 +1,7 @@
 import "../styles/ToolsPage.css";
-
-export default function Filters({ onFilter }) {
+// Filtering options for organising Tools: all, available, in use, missing
+// Displays them as clickable buttons to toggle
+export default function Filters({onFilter}) {
   return (
     <div className="row">
       <button className="filters-button" onClick={() => onFilter(null)}>All</button>

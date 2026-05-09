@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import "../styles/FaultsPage.css";
 
+// Faults page 
 export default function FaultsPage() {
-  const [faults, setFaults] = useState([]);
+  const [faults, setFaults] = useState([]); // Stores fault logs from backend
+  // Loads faults from backend
   async function loadFaults() {
+    // Fault logs from backend endpoint
     try {
       const res = await fetch("/api/fault-logs", {
         credentials: "include",
       });
+      // Stores data in the state if its an array
       const data = await res.json();
       setFaults(
         Array.isArray(data) ? data : []
       );
-
+    // Logging errors to console
     } catch (err) {
       console.error(err);
       setFaults([]);
@@ -21,7 +25,7 @@ export default function FaultsPage() {
   useEffect(() => {
     loadFaults();
   }, []);
-
+// Marking faults as resolved through updating a fault
   async function resolveFault(id) {
     try {
       await fetch(
@@ -31,12 +35,13 @@ export default function FaultsPage() {
           credentials: "include",
         }
       );
+      // Reloading faults after updates
       loadFaults();
     } catch (err) {
       console.error(err);
     }
   }
-
+// UI of faults page - 
   return (
     <div className="faults-page">
       <h1 className="heading-style">

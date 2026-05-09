@@ -7,15 +7,15 @@ export default function ToolForm({ onAdd }) {
   const [type, setType] = useState("");
   const [location, setLocation] = useState("");
 
+  // Handling blank inputs 
   const handleSubmit = () => {
     if (!name || !type) return;
-
-    onAdd({ name, type, location });
-
+    onAdd({name, type, location});
     setName("");
     setType("");
     setLocation("");
   };
+
   // Displaying tool form with card styling
   return (
     <div className="tool-card">

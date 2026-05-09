@@ -39,7 +39,7 @@ export default function LoginPage() {
   async function handleLogin(e) {
     e.preventDefault();
 
-    // Block input during lockout
+    // Block preventing user input during lockout from multiple failed log ins
     if (isLocked) return;
 
     if (isMalicious(username) || isMalicious(password)) {
@@ -63,23 +63,25 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (!res.ok) {
+        // Lock trigger + countdown before user input is restored
         if (res.status === 429) {
           setLockTime(data.remainingTime || 300);
           setError("Account locked for 5 minutes");
           return;
         }
-
+        
         setError(data.error);
         return;
       }
-
+      // Successful login allows for navigation to dashboard page
       setError("");
       navigate("/");
+
     } catch {
       setError("Server error");
     }
   }
-
+// Log in page display + styling
   return (
     <div
       style={{
@@ -144,16 +146,14 @@ export default function LoginPage() {
         >
           {isLocked ? "Locked..." : "Login"}
         </button>
-
         {error && <p style={{ color: "red" }}>{error}</p>}
-
         {isLocked && (
           <p
             style={{
               color: "#ff4444",
               fontWeight: "bold",
             }}
-          >
+>
             Try again in {lockTime}s
           </p>
         )}
