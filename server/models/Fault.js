@@ -1,6 +1,8 @@
 const { DataTypes } = require("sequelize");
 const faultSequelize = require("../faultDatabase");
 
+// Creates a Fault model for fault table in database
+// Primary key: id
 const Fault = faultSequelize.define(
   "Fault",
   {

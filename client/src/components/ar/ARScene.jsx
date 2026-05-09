@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unknown-property */
-
+// Main AR scene
 export default function ARScene({
     arReady,
     mode,
@@ -9,6 +8,7 @@ export default function ARScene({
     toolColours,
     toolLabels,
   }) {
+    // Loading screen until AR is ready
     if (!arReady) {
       return <div>Loading AR...</div>;
     }
@@ -19,7 +19,9 @@ export default function ARScene({
         renderer="logarithmicDepthBuffer: true;"
         arjs="sourceType: webcam; debugUIEnabled:false;"
       >
+        {/* Marker used for AR tracking is Hiro in prototype */}
         <a-marker preset="hiro" id="mainMarker" emitevents="true">
+          {/* Tool mode - displays tool overlay */}
           {mode === "tool" && tool && (
             <>
               <a-box
@@ -35,7 +37,6 @@ export default function ARScene({
                   easing: linear;
                 "
               />
-  
               <a-ring
                 position="0 -0.3 0"
                 rotation="-90 0 0"
@@ -44,7 +45,6 @@ export default function ARScene({
                 color={toolColours[tool.status]}
                 opacity="0.55"
               />
-  
               <a-text
                 value="TOOL INTELLIGENCE SYSTEM"
                 position="0 2.1 0"
@@ -52,7 +52,6 @@ export default function ARScene({
                 color="#00ffd0"
                 width="4"
               />
-  
               <a-plane
                 color="#101820"
                 opacity="0.82"
@@ -64,21 +63,16 @@ export default function ARScene({
                 <a-text
                   value={`
   ${tool.name || "Unknown Tool"}
-  
+          {*/ Shows details of Tool*/}
   Status:
   ${toolLabels[tool.status] || "UNKNOWN"}
-  
   ID: ${tool.id || "N/A"}
-  
   Location:
   ${tool.location || "Storage Bay"}
-  
   Condition:
   ${tool.condition || "Operational"}
-  
   Assigned:
   ${tool.assignedTo || "None"}
-  
   Last Used:
   ${tool.lastUsed || "N/A"}
                   `}
@@ -92,7 +86,7 @@ export default function ARScene({
               </a-plane>
             </>
           )}
-  
+  {/* Fault mode - displays fault overlay */}
           {mode === "fault" && (
             <>
               <a-text
@@ -102,14 +96,12 @@ export default function ARScene({
                 color="#ff8855"
                 width="4"
               />
-  
               <a-sphere
                 id="faultSphere"
                 position="0 0.35 0"
                 radius="0.38"
                 material="color:red; opacity:0.55; wireframe:true"
               />
-  
               {!showDetails ? (
                 <a-plane
                   id="faultBox"
@@ -119,13 +111,12 @@ export default function ARScene({
                   height="1"
                   position="0 1.2 0"
                 >
+                  {/* Fault details text */}
                   <a-text
                     value={`
-  ${fault.FaultName || "FAULT LOADING"}
-  
+  ${fault.FaultName || "FAULT LOADING"}  
   Severity:
   ${fault.Severity || "UNKNOWN"}
-  
   Service:
   ${fault.ServiceType || "Inspection"}
                     `}
@@ -149,16 +140,12 @@ export default function ARScene({
                     value={`
   FAULT:
   ${fault.FaultName || ""}
-  
   SEVERITY:
   ${fault.Severity || ""}
-  
   DESCRIPTION:
   ${fault.Description || "No description available"}
-  
   TOOLS REQUIRED:
   ${fault.ToolsNeeded || "Standard toolkit"}
-  
   SERVICE TYPE:
   ${fault.ServiceType || "Inspection"}
                     `}
@@ -174,7 +161,7 @@ export default function ARScene({
             </>
           )}
         </a-marker>
-  
+        {/* AR camera */}
         <a-entity camera />
       </a-scene>
     );

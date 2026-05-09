@@ -6,21 +6,21 @@ const User = require("../models/User");
 const Log = require("../models/Log");
 
 // Login attempt tracking
+// Max 3 attempts, locked out for 5 mins after
 const loginAttempts = {};
 const MAX_ATTEMPTS = 3;
 const LOCK_TIME = 5 * 60 * 1000; // 5 minutes
-
+// Handling SQL injections
 function isMalicious(input) {
   return /('|--|;|OR\s+1=1|DROP|SELECT)/i.test(input);
 }
-
+// Records number of failed log in attempts by specific user
 function handleFail(username) {
   if (!loginAttempts[username]) {
     loginAttempts[username] = { count: 1 };
   } else {
     loginAttempts[username].count++;
   }
-
   const record = loginAttempts[username];
 
   if (record.count >= MAX_ATTEMPTS) {
@@ -31,20 +31,20 @@ function handleFail(username) {
   return MAX_ATTEMPTS - record.count;
 }
 
-// Login
+// Login route 
 router.post("/login", async (req, res) => {
   try {
     let { username, password } = req.body;
-
+// Validates log in, can't have empty fields
     if (!username || !password) {
       return res.status(400).json({
         error: "All fields required",
       });
     }
-
     username = username.trim();
     password = password.trim();
 
+    // Handling against malicious attempts
     if (isMalicious(username) || isMalicious(password)) {
       return res.status(400).json({
         error: "Invalid input detected",
@@ -52,12 +52,11 @@ router.post("/login", async (req, res) => {
     }
 
     const record = loginAttempts[username];
-
+// Checks if account is currently locked
     if (record && record.lockUntil) {
       const remaining = Math.ceil(
         (record.lockUntil - Date.now()) / 1000
       );
-
       if (remaining > 0) {
         return res.status(429).json({
           error: "Account locked",
@@ -69,7 +68,7 @@ router.post("/login", async (req, res) => {
     }
 
     const user = await User.findByPk(username);
-
+// If user does not exist, it logs the failed log in 
     if (!user) {
       await Log.create({
         user: username,
@@ -79,20 +78,19 @@ router.post("/login", async (req, res) => {
       });
 
       handleFail(username);
-
       return res.status(401).json({
         error: "Invalid username",
       });
     }
 
     let match = false;
-
+// Checks hashed password
     if (user.password.startsWith("$2b$")) {
       match = await bcrypt.compare(password, user.password);
     } else {
       match = password === user.password;
     }
-
+// Logs incorrect password attempts
     if (!match) {
       await Log.create({
         user: username,
@@ -102,7 +100,7 @@ router.post("/login", async (req, res) => {
       });
 
       const remainingAttempts = handleFail(username);
-
+     // Locks account when too many failed attempts
       if (remainingAttempts <= 0) {
         await Log.create({
           user: username,
@@ -122,7 +120,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    loginAttempts[username] = { count: 0 };
+    loginAttempts[username] = { count: 0 }; // Only resets when successfully logged in
 
     req.session.user = {
       username: user.username,
@@ -148,7 +146,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Logout
+// Logout to destroy session
 router.post("/logout", async (req, res) => {
   try {
     const username = req.session?.user?.username || "unknown";
@@ -174,7 +172,7 @@ router.post("/logout", async (req, res) => {
   }
 });
 
-// Session check
+// Current logged-in session check
 router.get("/me", (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({

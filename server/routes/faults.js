@@ -1,41 +1,42 @@
 const express = require("express");
 const router = express.Router();
 
+// Fault logs stored in JSON file
 const fs = require("fs");
 const path = require("path");
 
 const Fault = require("../models/Fault");
 const Tool = require("../models/Tool");
 
-const { detectFaults } = require("../services/faultDetector");
+const { detectFaults } = require("../services/faultDetector"); // Runs fault detection logic
 
-const logsPath = path.join(__dirname, "../faultLogs.json");
+const logsPath = path.join(__dirname, "../faultLogs.json"); // path to storing fault logs
 
+// Checks if fault log file exists 
 function ensureFaultLogFile() {
   if (!fs.existsSync(logsPath)) {
     fs.writeFileSync(logsPath, JSON.stringify([], null, 2));
   }
 }
 
+// Reads all fault logs from JSON file
 function readFaultLogs() {
   ensureFaultLogFile();
-
   const data = fs.readFileSync(logsPath, "utf8");
-
   if (!data.trim()) {
     return [];
   }
-
   return JSON.parse(data);
 }
 
+// Writes updated fault logs
 function writeFaultLogs(logs) {
   fs.writeFileSync(logsPath, JSON.stringify(logs, null, 2));
 }
-
+// Saves new fault log
 function saveFaultLog(fault) {
   const logs = readFaultLogs();
-
+// Prevents active faults being duplicated
   const alreadyActive = logs.find(
     (log) =>
       log.faultName === fault.FaultName &&
@@ -45,7 +46,7 @@ function saveFaultLog(fault) {
   if (alreadyActive) {
     return alreadyActive;
   }
-
+// Creates a new fault log entry with the specified format and details
   const newLog = {
     id: Date.now(),
     faultName: fault.FaultName,
@@ -63,13 +64,11 @@ function saveFaultLog(fault) {
   return newLog;
 }
 
-// IMPORTANT: detect route must come BEFORE /:faultName
+// Running fault detection based off the tools currently in system
 router.get("/system/detect", async (req, res) => {
   try {
     const tools = await Tool.findAll();
-
     const detectedFaults = detectFaults(tools);
-
     if (!detectedFaults || detectedFaults.length === 0) {
       return res.json({
         detected: false,
@@ -108,7 +107,6 @@ router.get("/", async (req, res) => {
 router.get("/:faultName", async (req, res) => {
   try {
     const faultName = decodeURIComponent(req.params.faultName);
-
     const fault = await Fault.findOne({
       where: {
         FaultName: faultName

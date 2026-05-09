@@ -14,6 +14,7 @@ export default function SessionWarning() {
 
   if (timeLeft > 120) return null; // only show last 2 mins
 
+  // Styling warning
   return (
     <div
       style={{

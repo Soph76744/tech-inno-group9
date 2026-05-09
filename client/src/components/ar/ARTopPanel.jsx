@@ -1,3 +1,4 @@
+// Panel shown at top of AR - for navigation and options
 export default function ARTopPanel({
   status,
   linkStyle,
@@ -10,7 +11,7 @@ export default function ARTopPanel({
   nextTool,
 }) {
 
-  // Styling the buttons
+  // Button styling
   const panelButtonStyle = {
     borderRadius: "8px",
     border: "1px solid black",
@@ -23,7 +24,7 @@ export default function ARTopPanel({
     boxShadow: "3px 3px black",
     transition: "0.2s",
   };
-
+  // Top panel 
   return (
     <div
       style={{
@@ -53,7 +54,6 @@ export default function ARTopPanel({
       >
         AR MAINTENANCE SYSTEM
       </h2>
-
       <p
         style={{
           marginTop: 8,
@@ -64,7 +64,6 @@ export default function ARTopPanel({
       >
         {status}
       </p>
-
       <div
         style={{
           display: "flex",
@@ -73,19 +72,17 @@ export default function ARTopPanel({
           marginTop: 14,
         }}
       >
+        {/* Navigation to main pages */}
         <a href="/dashboard" style={linkStyle}>
           Dashboard
         </a>
-
         <a href="/tools" style={linkStyle}>
           Tools
         </a>
-
         <a href="/faults" style={linkStyle}>
           Faults
         </a>
       </div>
-
       <div style={{ marginTop: 16 }}>
         <button
           onClick={() => setMode("tool")}
@@ -95,9 +92,9 @@ export default function ARTopPanel({
             color: "black",
           }}
         >
+          {/* Button options to switch between tool/fault mode */}
           Tool Mode
         </button>
-
         <button
           onClick={() => setMode("fault")}
           style={{
@@ -109,7 +106,8 @@ export default function ARTopPanel({
           Fault Mode
         </button>
       </div>
-
+      
+      {/* When in tool mode shows controls for updating tool's options */}
       {tool && showControls && mode === "tool" && (
         <div
           style={{
@@ -130,7 +128,6 @@ export default function ARTopPanel({
           >
             Use
           </button>
-
           <button
             onClick={() => updateTool("available")}
             style={{
@@ -141,7 +138,6 @@ export default function ARTopPanel({
           >
             Return
           </button>
-
           <button
             onClick={() => updateTool("missing")}
             style={{
@@ -152,7 +148,6 @@ export default function ARTopPanel({
           >
             Missing
           </button>
-
           <button
             onClick={previousTool}
             style={{
@@ -161,9 +156,10 @@ export default function ARTopPanel({
               color: "black",
             }}
           >
+
+            {/* Allows the user to switch to previous/next tool */}
             Previous Tool
           </button>
-
           <button
             onClick={nextTool}
             style={{

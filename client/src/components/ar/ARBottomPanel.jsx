@@ -1,87 +1,91 @@
+// Bottom pannel on AR screen
+
 export default function ARBottomPanel({
-    markerVisible,
-    mode,
-    showDetails,
-    setShowDetails,
-    today,
-    fault,
-    logs,
-  }) {
-    return (
-      <>
-        {markerVisible && mode === "fault" && (
-          <button
-            onClick={() => setShowDetails(!showDetails)}
-            style={{
-              position: "fixed",
-              bottom: "145px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              padding: "14px 24px",
-              borderRadius: "12px",
-              border: "none",
-              background: "rgba(20,20,20,0.85)",
-              color: "white",
-              backdropFilter: "blur(10px)",
-              cursor: "pointer",
-              zIndex: 9999,
-              fontWeight: 600,
-            }}
-          >
-            {showDetails
-              ? "Hide Details"
-              : "Open Fault Details"}
-          </button>
-        )}
-  
-        <div
+  markerVisible,
+  mode,
+  showDetails,
+  setShowDetails,
+  today,
+  fault,
+  logs,
+}) {
+  // Only shows fault details when user is viewing a fault (in fault mode with detected marker)
+  return (
+    <>
+      {markerVisible && mode === "fault" && (
+        <button
+          onClick={() => setShowDetails(!showDetails)}
           style={{
             position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            background: "rgba(5,5,5,0.9)",
+            bottom: "145px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: "14px 24px",
+            borderRadius: "12px",
+            border: "none",
+            background: "rgba(20,20,20,0.85)",
+            color: "white",
             backdropFilter: "blur(10px)",
-            color: "#e5e5e5",
-            fontFamily: "Consolas, monospace",
-            fontSize: 12,
-            padding: "10px 14px",
-            maxHeight: 115,
-            overflowY: "auto",
+            cursor: "pointer",
             zIndex: 9999,
-            borderTop: "1px solid rgba(255,255,255,0.08)",
+            fontWeight: 600,
+          }}
+        > {/* Button changes depending on state */}
+          {showDetails
+            ? "Hide Details"
+            : "Open Fault Details"}
+        </button>
+      )}
+      {/* System log panel + styling */}
+      <div
+        style={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          background: "rgba(5,5,5,0.9)",
+          backdropFilter: "blur(10px)",
+          color: "#e5e5e5",
+          fontFamily: "Consolas, monospace",
+          fontSize: 12,
+          padding: "10px 14px",
+          maxHeight: 115,
+          overflowY: "auto",
+          zIndex: 9999,
+          borderTop: "1px solid rgba(255,255,255,0.08)",
+        }}
+      >
+        <div
+          style={{
+            marginBottom: 6,
+            color: "#8f8f8f",
           }}
         >
+          {markerVisible
+            ? `${today} | Technician: Marang | Service: ${
+                fault.ServiceType || "Inspection"
+              }`
+            : today}
+        </div>
+          {/* Maps all system logs to be displayed on panel 
+          Different colours displayed based on log type*/}
+        {logs.map((l, i) => (
           <div
+            key={i}
             style={{
-              marginBottom: 6,
-              color: "#8f8f8f",
+              color:
+                l.type === "warn"
+                  ? "#ff8080"
+                  : l.type === "tool"
+                  ? "#6fffd2"
+                  : "#d7d7d7",
+              marginBottom: 3,
             }}
           >
-            {markerVisible
-              ? `${today} | Technician: Marang | Service: ${
-                  fault.ServiceType || "Inspection"
-                }`
-              : today}
+            {l.text}
           </div>
-  
-          {logs.map((l, i) => (
-            <div
-              key={i}
-              style={{
-                color:
-                  l.type === "warn"
-                    ? "#ff8080"
-                    : l.type === "tool"
-                    ? "#6fffd2"
-                    : "#d7d7d7",
-                marginBottom: 3,
-              }}
-            >
-              {l.text}
-            </div>
-          ))}
-        </div>
-      </>
-    );
-  }
+        ))}
+      </div>
+    </>
+  );
+}

@@ -1,5 +1,6 @@
+// Detects faults based off tool's condition
 function detectFaults(tools) {
-  const faults = [];
+  const faults = []; // stores all detected faults
 
   if (!Array.isArray(tools)) {
     return faults;
@@ -15,7 +16,7 @@ function detectFaults(tools) {
     (tool) => tool.status === "in-use"
   );
 
-  // Fault 1
+  // Fault when at least one tool is missing
   if (missingTools.length > 0) {
     faults.push({
       FaultName: "Loose Bolt",
@@ -27,7 +28,7 @@ function detectFaults(tools) {
     });
   }
 
-  // Fault 2
+  // Fault when 2 or more tools are in use 
   if (inUseTools.length >= 2) {
     faults.push({
       FaultName: "Damaged Fuse",
@@ -39,7 +40,7 @@ function detectFaults(tools) {
     });
   }
 
-  // Fault 3
+  // Fault when 2 or more tools are missing
   if (missingTools.length >= 2) {
     faults.push({
       FaultName: "Brake Pressure Loss",
@@ -51,7 +52,7 @@ function detectFaults(tools) {
     });
   }
 
-  return faults;
+  return faults; // Returns all detected faults
 }
 
 module.exports = {

@@ -9,19 +9,16 @@ const {
   ToolUpdateSchema,
 } = require("../schemas/toolSchema");
 
+// API routes for tools - GET, CREATE, UPDATE, DELETE
 // Get all tools
 router.get("/", async (req, res) => {
   try {
     const { status } = req.query;
-
     let where = {};
-
     if (status) {
       where.status = status;
     }
-
     const tools = await Tool.findAll({ where });
-
     res.json(tools);
   } catch (err) {
     console.error(err);
@@ -36,13 +33,11 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const tool = await Tool.findByPk(req.params.id);
-
     if (!tool) {
       return res.status(404).json({
         error: "Tool not found",
       });
     }
-
     res.json(tool);
   } catch (err) {
     console.error(err);
@@ -57,7 +52,6 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { error } = ToolCreateSchema.validate(req.body);
-
     if (error) {
       return res.status(422).json({
         error: {
@@ -77,7 +71,7 @@ router.post("/", async (req, res) => {
         req.session?.user?.username || "unknown",
       last_checked: new Date(),
     });
-
+    // Logs creation of tool
     await Log.create({
       user: req.session?.user?.username || "unknown",
       tool_id: tool.id,
@@ -99,13 +93,11 @@ router.post("/", async (req, res) => {
 router.patch("/:id", async (req, res) => {
   try {
     const { error } = ToolUpdateSchema.validate(req.body);
-
     if (error) {
       return res.status(422).json({
         error: error.details[0].message,
       });
     }
-
     const tool = await Tool.findByPk(req.params.id);
 
     if (!tool) {
@@ -115,14 +107,11 @@ router.patch("/:id", async (req, res) => {
     }
 
     tool.status = req.body.status;
-
     tool.last_checked_by =
       req.session?.user?.username || "unknown";
-
     tool.last_checked = new Date();
-
     await tool.save();
-
+// Logs the creation of a tool
     await Log.create({
       user: req.session?.user?.username || "unknown",
       tool_id: tool.id,
@@ -134,7 +123,6 @@ router.patch("/:id", async (req, res) => {
     res.json(tool);
   } catch (err) {
     console.error(err);
-
     res.status(500).json({
       error: "Server error",
     });
@@ -153,7 +141,7 @@ router.delete("/:id", async (req, res) => {
     }
 
     await tool.destroy();
-
+// Logs the deletion of a tool
     await Log.create({
       user: req.session?.user?.username || "unknown",
       tool_id: tool.id,

@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); // Stores logged in user information
 
   useEffect(() => {
     async function loadUser() {
       try {
+        // Requests the current logged in user from the backend
         const res = await fetch("/api/auth/me", {
           credentials: "include",
         });
@@ -16,34 +17,36 @@ export default function Navbar() {
           setUser(null);
           return;
         }
-
+        // Saves the current user data in state
         const data = await res.json();
         setUser(data.user);
+
       } catch (err) {
         console.error(err);
-        setUser(null);
+        setUser(null); // Resets user if errors
       }
     }
-
     loadUser();
   }, []);
 
+  // For logging the user out of the system
+  // Sends log out request to backend 
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", {
         method: "POST",
         credentials: "include",
       });
-
+  // Removes saved user data
       localStorage.removeItem("user");
       setUser(null);
-
+// Redirects back to log in page when logged out
       navigate("/login");
     } catch (err) {
       console.error(err);
     }
   };
-
+  // Styling and display of navigation bar
   return (
     <nav
       style={{
@@ -62,22 +65,20 @@ export default function Navbar() {
           alignItems: "center",
         }}
       >
+        {/* Links that every role can see and direct to, on left side*/}
         <Link to="/dashboard" style={linkStyle}>
           Dashboard
         </Link>
-
         <Link to="/tools" style={linkStyle}>
           Tool Tracker
         </Link>
-
         <Link to="/faults" style={linkStyle}>
           Fault Logs
         </Link>
-
         <Link to="/ar" style={linkStyle}>
           AR
         </Link>
-
+        {/* Only admins can be directed to audit logs */}
         {user?.role === "admin" && (
           <>
             <Link to="/logs" style={linkStyle}>
@@ -86,7 +87,7 @@ export default function Navbar() {
           </>
         )}
       </div>
-
+      {/* Styling and showing user role in right corner as well as log out button */}
       <div
         style={{
           display: "flex",

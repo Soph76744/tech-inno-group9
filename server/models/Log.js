@@ -1,5 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../database");
+// Creates a Logs model for logs table in database
+// Primary key: id
 
 const Log = sequelize.define(
   "Log",

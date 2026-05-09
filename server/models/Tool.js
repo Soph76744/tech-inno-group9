@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../database");
-
+// Creates a Tool, model for tools table in database
+// Primary key: id
 const Tool = sequelize.define(
   "Tool",
   {
