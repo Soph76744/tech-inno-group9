@@ -274,7 +274,7 @@ async function createUserIfNotExists(username, password, role) {
 
 const PORT = process.env.PORT || 3000; // Server port
 
-// Staers express server + database
+// Starts express server + database
 async function startServer() {
   try {
     await sequelize.sync({ alter: true }); // synchronise database tables
